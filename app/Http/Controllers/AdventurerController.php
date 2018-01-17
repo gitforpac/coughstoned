@@ -7,7 +7,6 @@ use Auth;
 use App\Models\User;
 use Hash;
 use App\Comment;
-use App\Rate;
 use Response;
 use Image; 
 

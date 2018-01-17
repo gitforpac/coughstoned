@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>PAC - Manage</title>
+  <title>Manage-</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -30,23 +30,24 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
-   <script type="text/javascript">
-     window.laravel = {!! json_encode(['csrf_token' => csrf_token()] ) !!}
-   </script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
-  @include('wsadmin.header')
-  @include('wsadmin.navs')
+  @include('superadmin.header')
+  @include('superadmin.navs')
   <div class="content-wrapper">
   @yield('content')
   </div>
   </div>
   <div class="modal fade" id="add_adventure_type">
     <div class="modal-dialog">
-      <div class="modal-content" style="background: transparent;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Add an Adventure Type</h4>
+        </div>
         <div class="modal-body">
           <div class="box box-warning">
             <!-- /.box-header -->
@@ -64,6 +65,9 @@
                 </form>
             </div>
           </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
         </div>
       </div>
       <!-- /.modal-content -->
@@ -109,13 +113,10 @@
 <script src="/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/dist/js/pages/dashboard.js"></script>
-
-<script src="/js/app.js"></script>
-
 <!-- AdminLTE for demo purposes -->
 <script src="/dist/js/demo.js"></script>
 <script type="text/javascript">
-  $('form#add_adv_type').ajaxForm({
+  $('form#addcre').ajaxForm({
   success: function(data) {
       var title = $('input[name="info_title"]').val();
       var body =  $('textarea[name="info_body"]').val();

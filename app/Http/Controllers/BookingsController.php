@@ -10,9 +10,12 @@ use App\Package;
 use Response;
 use App\Booking;
 use App\Schedule;
-use App\AdminNotif;
 use App\Models\User;
 use App\CreditCard;
+use App\Admin;
+use App\Notifications\NotifyNewBooking;
+use Notification;
+use App\Events\NewBooking;
 
 class BookingsController extends Controller
 {
@@ -27,7 +30,15 @@ class BookingsController extends Controller
 
         $validateCC = $this->checkCC($request->cardnumber,$request->exp,$request->cvv,$request->payment);
 
-        if(!$validateCC == false) {
+        if(!$validateCC == false) { 
+
+            $admins = Admin::all();
+            $package = Package::find($pid);
+
+            Notification::send($admins,new NotifyNewBooking($package));
+            event(new NewBooking());
+        
+
             return Response::json(['booked' => $validateCC]); 
         } else {
             return Response::json(['success' => $validateCC, 'error' => $this->error]);  
@@ -35,6 +46,8 @@ class BookingsController extends Controller
 
 
     }
+
+
 
     public function review($pid, Request $request)
     {
@@ -237,7 +250,7 @@ class BookingsController extends Controller
                     $this->error = 'Credit Card Expired'; 
                     return false; 
                 } else {
-                    if($c->balance >= $payment ) {
+                    if($c->balance >= (float)$payment ) {
                         return true;
                         $this->error = '';
                     } else {
