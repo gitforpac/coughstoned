@@ -19,6 +19,7 @@ class BookingsController extends Controller
 
     private $bookingfee = 0.20;
     public $error = '';
+    private $discount_per_person = 250;
 
     public function book($pid,Request $request)
     {
@@ -163,51 +164,67 @@ class BookingsController extends Controller
     public function getPrices($pid,Request $request)
     {
 
+        //  private $bookingfee = 0.20;
+        // public $error = '';
+        // private $max_person = 12;
+        // private $discount_per_person = 250;
         $package = Package::find($pid)->first();
-        
-        switch ($request->num_guest) {
-            case 1:
-                $total = $package->price*($package->adventurer_limit/2)-800;
-                break;
-            case 2:
-                $total = ($package->price*3)*$request->num_guest;
-                break;
-            case 3:
-                $total = ($package->price*2+800)*$request->num_guest;
-                break;
-            case 4:
-                $total = ($package->price*2+400)*$request->num_guest;
-                break;
-            case 5:
-                 $total = ($package->price*2)*$request->num_guest;
-                break;
-            case 6:
-                $total = ($package->price+1000)*$request->num_guest;
-                break;
-            case 7:
-                 $total = ($package->price+900)*$request->num_guest;
-                break;
-            case 8:
-                 $total = ($package->price+800)*$request->num_guest;
-                break;
-            case 9:
-                 $total = ($package->price+700)*$request->num_guest;
-                break;
-            case 10:
-                 $total = ($package->price+600)*$request->num_guest;
-                break;
-            case 11:
-                 $total = ($package->price+500)*$request->num_guest;
-                break;
-            case 12:
-                 $total = ($package->price+400)*$request->num_guest;
-                break;
-            default:
-                 $total = $package->price;
 
+        for($count = 0; $count < $request->num_guest; $count++){
+            $total = $package->price;
+            $per_head = $total;
+            $booking_fee = $total*$this->bookingfee;
+            if($count >= 1){
+                $total = ($package->price*($count+1))-($this->discount_per_person*$count);
+                $per_head = $package->price-($this->discount_per_person*$count);
+                $booking_fee = $total*$this->bookingfee;
+            }
         }
+        
+        
+        // switch ($request->num_guest) {
+        //     case 1:
+        //         $total = $package->price*($package->adventurer_limit/2)-800;
+        //         break;
+        //     case 2:
+        //         $total = ($package->price*3)*$request->num_guest;
+        //         break;
+        //     case 3:
+        //         $total = ($package->price*2+800)*$request->num_guest;
+        //         break;
+        //     case 4:
+        //         $total = ($package->price*2+400)*$request->num_guest;
+        //         break;
+        //     case 5:
+        //          $total = ($package->price*2)*$request->num_guest;
+        //         break;
+        //     case 6:
+        //         $total = ($package->price+1000)*$request->num_guest;
+        //         break;
+        //     case 7:
+        //          $total = ($package->price+900)*$request->num_guest;
+        //         break;
+        //     case 8:
+        //          $total = ($package->price+800)*$request->num_guest;
+        //         break;
+        //     case 9:
+        //          $total = ($package->price+700)*$request->num_guest;
+        //         break;
+        //     case 10:
+        //          $total = ($package->price+600)*$request->num_guest;
+        //         break;
+        //     case 11:
+        //          $total = ($package->price+500)*$request->num_guest;
+        //         break;
+        //     case 12:
+        //          $total = ($package->price+400)*$request->num_guest;
+        //         break;
+        //     default:
+        //          $total = $package->price;
 
-         return Response::json(['total' => $total]); 
+        // }
+
+         return Response::json(['total' => $booking_fee]);
 
     }
 

@@ -1,4 +1,5 @@
 <?php
+Route::get('/test', 'BookingsController@getPrices');
 
 Route::view('/', 'homepage',['title' => 'Philippine Adventure Consultants'])->name('index');
 Route::view('/messages', 'chat');
@@ -38,6 +39,8 @@ Route::post('/updateitinerary/{pid}','ManagersController@updateItinerary');
 Route::post('/addcontent/{pid}','ManagersController@addContent');
 Route::post('/deletecontent/{pid}','ManagersController@deleteContent');
 Route::post('/addadventuretype','ManagersController@addadventureType');
+
+
 //BOOKING
 Route::get('/book/review/{pid}', 'BookingsController@review')->name('book');
 Route::post('/book/confirm/{pid}', 'BookingsController@confirm');
@@ -46,6 +49,10 @@ Route::post('/paymentg/{id}', 'BookingsController@getPrices');
 Route::get('/asd', 'BookingsController@checkCC');
 
 //SUPERADMIN
+Route::post('/deleteuser/{id}','SuperAdminController@deleteAccAdventurer');
+Route::post('/deletecrew/{id}','SuperAdminController@deleteAccCrew');
+Route::post('/addmanager','SuperAdminController@addCrewManager');
+Route::post('/addadventurer','SuperAdminController@addAccountUser');
 
 // ADVENTURER
 Route::resource('adventurer','AdventurerController');

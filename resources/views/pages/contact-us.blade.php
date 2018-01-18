@@ -53,7 +53,7 @@ If you would like us to keep you on file, please email us at cebu@pac.com!</p>
                                 Subject</label>
                             <select id="subject" name="subject" class="form-control" required="required">
                                 <option value="na" selected="">Choose One:</option>
-                                <option value="service">General Customer Service</option>
+                                <option value="service">Inquiry</option>
                                 <option value="suggestions">Suggestions</option>
                                 <option value="product">Feedback</option>
                             </select>
@@ -80,8 +80,8 @@ If you would like us to keep you on file, please email us at cebu@pac.com!</p>
             <legend><span class="fa fa-globe"></span> Where's our headquarters?</legend>
             <address>
                 <strong>Philippine Adventure Consultants</strong><br>
-                81 C. Ouano St.,<br>
-                Looc Mandaue City Cebu 6014<br>
+                Talamban<br>
+                Cebu City Cebu 6000<br>
                 
                 (+032) 344-5934
             </address>
