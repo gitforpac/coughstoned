@@ -44,8 +44,12 @@ Route::post('/addcontent/{pid}','ManagersController@addContent');
 Route::post('/deletecontent/{pid}','ManagersController@deleteContent');
 Route::post('/addadventuretype','ManagersController@addadventureType');
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
+=======
+Route::post('/notifications/get','ManagersController@getNotifications');
+>>>>>>> 90f3dda47ef6dd09d5c5da10fd8f0242d620d37f
 =======
 Route::post('/notifications/get','ManagersController@getNotifications');
 >>>>>>> 90f3dda47ef6dd09d5c5da10fd8f0242d620d37f
