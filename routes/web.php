@@ -3,6 +3,10 @@ Route::get('/test', 'BookingsController@getPrices');
 
 Route::view('/', 'homepage',['title' => 'Philippine Adventure Consultants'])->name('index');
 Route::view('/messages', 'chat');
+Route::get('/te',function() {
+  var_dump(Auth::guard('admin')->id());
+});
+
 
 Route::view('/upload', 'crew.upload');
 Route::post('/up/{pid}', 'ManagersController@upload');
@@ -39,8 +43,12 @@ Route::post('/updateitinerary/{pid}','ManagersController@updateItinerary');
 Route::post('/addcontent/{pid}','ManagersController@addContent');
 Route::post('/deletecontent/{pid}','ManagersController@deleteContent');
 Route::post('/addadventuretype','ManagersController@addadventureType');
+<<<<<<< HEAD
 
 
+=======
+Route::post('/notifications/get','ManagersController@getNotifications');
+>>>>>>> 90f3dda47ef6dd09d5c5da10fd8f0242d620d37f
 //BOOKING
 Route::get('/book/review/{pid}', 'BookingsController@review')->name('book');
 Route::post('/book/confirm/{pid}', 'BookingsController@confirm');

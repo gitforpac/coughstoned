@@ -1,6 +1,6 @@
 @extends('wsadmin.crewlayout')
 @section('content')
-<div class="col-md-9">
+<div class="col-md-12">
 <div class="box-header with-border">
   <h3 class="box-title">Bordered Table</h3>
 </div>
@@ -19,7 +19,7 @@
         <td>{{$bk->price}}</td>
         <td>{{$bk->location}}</td>
         <td>
-        	<a href="javascript:void(0)" class="btn btn-info" id="viewbookingsbtn" data-id="{{$bk->id}}">
+        	<a href="javascript:void(0)" class="btn-sm btn-info" id="viewbookingsbtn" data-id="{{$bk->id}}">
         		@php
         		$i = $loop->iteration-1;
         		@endphp

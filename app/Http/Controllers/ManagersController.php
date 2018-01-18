@@ -14,7 +14,9 @@ use App\PackageVideos;
 use App\Comment;
 use App\AdventureType;
 use App\Content;
+use App\Notification;
 use Response;
+use Auth;
 use View;
 
 class ManagersController extends Controller
@@ -434,6 +436,13 @@ class ManagersController extends Controller
         );
 
         return view('wsadmin.editpackage')->with("data",$data);
+    }
+
+
+    public function getNotifications()
+    {
+
+        return Notification::all();
     }
 
 

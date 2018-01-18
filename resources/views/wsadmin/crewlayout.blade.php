@@ -30,6 +30,10 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+   <script type="text/javascript">
+     window.laravel = {!! json_encode(['csrf_token' => csrf_token()] ) !!}
+   </script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -42,12 +46,7 @@
   </div>
   <div class="modal fade" id="add_adventure_type">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Add an Adventure Type</h4>
-        </div>
+      <div class="modal-content" style="background: transparent;">
         <div class="modal-body">
           <div class="box box-warning">
             <!-- /.box-header -->
@@ -65,9 +64,6 @@
                 </form>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
         </div>
       </div>
       <!-- /.modal-content -->
@@ -113,6 +109,9 @@
 <script src="/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/dist/js/pages/dashboard.js"></script>
+
+<script src="/js/app.js"></script>
+
 <!-- AdminLTE for demo purposes -->
 <script src="/dist/js/demo.js"></script>
 <script type="text/javascript">
