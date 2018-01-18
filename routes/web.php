@@ -43,9 +43,6 @@ Route::post('/updateitinerary/{pid}','ManagersController@updateItinerary');
 Route::post('/addcontent/{pid}','ManagersController@addContent');
 Route::post('/deletecontent/{pid}','ManagersController@deleteContent');
 Route::post('/addadventuretype','ManagersController@addadventureType');
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 
 =======
 Route::post('/notifications/get','ManagersController@getNotifications');
