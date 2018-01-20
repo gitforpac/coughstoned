@@ -26,6 +26,7 @@ $(document).ready(function(){
 
 // add inclusion
 $('#add_includedbtn').click(function(e){
+	Pace.restart();
 	icount = parseInt(icount) + 1;
  e.preventDefault();
  	$('#add_includedbtn').prop('disabled',true);
@@ -116,6 +117,7 @@ $.confirm({
 
 // add date
 $('#add_avdbtn').click(function(e){
+Pace.restart();
 scount = parseInt(scount) + 1;
 e.preventDefault();
 var dateavd = $('#date-avd').val();
@@ -253,6 +255,7 @@ $(function() {
 	$('#upload-photo').ajaxForm({
 		dataType: 'json',
 	    beforeSend: function() {
+	    	Pace.restart();
 	        var percentVal = '0%';
 	        bar.width(percentVal)
 	        percent.html(percentVal);
@@ -278,6 +281,7 @@ $(function() {
 $('#add-video-form').ajaxForm({
 		dataType: 'json',
 	    beforeSubmit: function() {
+			Pace.restart();
 	    	var link = $('input[name="video_link"]').val()
 	        var validLink = ValidURL(link);
 	        if(validLink == true){
@@ -292,7 +296,7 @@ $('#add-video-form').ajaxForm({
             	return false;
 	        }
 	    },
-	    success: function(data) {
+	    success: function(data) {	
 	    	$('#videosga').find('div#vupds').html(data)
 	    }
 	});
@@ -366,6 +370,9 @@ $('#basic-details').submit(function(e) {
 	e.preventDefault();
 	$("#basic-details").ajaxSubmit({
 		dataType:  'json', 
+		beforeSubmit: function() {
+			Pace.restart();
+		},
 		success: function(data) {
 			if(data.success == true) {
 				$.notify(" Updated Successfully", "success");
@@ -389,6 +396,9 @@ $('#edit-itinerary-form').ajaxForm({
 
 
 $('#info-form').ajaxForm({
+	beforeSubmit: function() {
+		Pace.restart();
+	},
 	success: function(data) {
 			var title = $('input[name="info_title"]').val();
 			var body =  $('textarea[name="info_body"]').val();

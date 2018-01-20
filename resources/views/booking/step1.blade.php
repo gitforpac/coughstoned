@@ -83,7 +83,7 @@
 	</div>
 		<div class="col" style="background-color: #f1f2ef; height: 240px; margin-top: 10px;">
 			<div class="detail-wrap">
-              	<h3 class="sb-name">{{$pagedata['package']->name}}</h3>
+              	<h3 class="sb-name">{{$pagedata['package']->pname}}</h3>
              	<h5 class="loc-header">Talamban </h5> 
               	<br>
               	<h5 class="sd">Date: {{date('M d, Y, D', strtotime($pagedata['schedule']->date))}}</h5>

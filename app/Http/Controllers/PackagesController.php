@@ -80,7 +80,7 @@ class PackagesController extends Controller
         $includeds = Package::find($pid)->includeds; 
         $images = Package::find($pid)->images;
         $content = Package::find($pid)->contents;
-        $comments = DB::table('comments')->select('comment','name')
+        $comments = DB::table('comments')->select('comment','user_fullname')
                                          ->join('users','users.id','=','comments.user_id')
                                          ->where(['comments.package_id' => $pid])
                                          ->get();

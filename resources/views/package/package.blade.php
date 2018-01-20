@@ -112,7 +112,7 @@
                 <div class="commentor">
                   <img src="{{asset('img/da.jpg')}}">
                   <div class="review-s1">
-                    <h3 style="">{{$c->name}}</h3>
+                    <h3 style="">{{$c->user_fullname}}</h3>
                   </div>
                 </div>
                   <div class="comment">
@@ -205,7 +205,7 @@
 
   var c = new Client();
   @if(Auth::guard('user')->check())
-  var name = '{{Auth::guard('user')->user()->name}}';
+  var name = '{{Auth::guard('user')->user()->user_fullname}}';
   c.writeComment({{$pagedata['package']->id}},{{Auth::guard('user')->id()}},name);
   @endif
 

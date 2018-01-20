@@ -8,8 +8,10 @@
 
 
 require('./bootstrap');
-
 window.Vue = require('vue');
+import Notifications from 'vue-notification'
+Vue.use(Notifications)
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -21,18 +23,5 @@ Vue.component('notification', require('./components/Notification.vue'));
 
 const app = new Vue({
     el: '#app',
-    data: {
-    	notifications: '',
-    },
-
-    created() {
-    	Echo.channel('notif').listen('NewBooking' , (e) => {
-    		axios.post('/notifications/get').then(response => { 
-	    		this.notifications = response.data;
-	    		alert('qweqwe')
-	    	})
-    	});
-    	
-    }
 });
 

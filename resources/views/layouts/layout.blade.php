@@ -24,12 +24,23 @@
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
         <link rel="stylesheet" type="text/css" href="/css/datepicker.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-       <script
+        <link rel="stylesheet" type="text/css" href="/css/loaders.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+        <script
           src="https://code.jquery.com/jquery-3.2.1.min.js"
           integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
           crossorigin="anonymous"></script>
-    </head>
+        <script type="text/javascript">
+            Pace.on('done', function() {
+                $('.loader-overlay').fadeOut();
+                $('.content-wrapper').fadeIn();
+            });
+        </script>
+</head>
     <body>
+    <div class="loader-overlay"><div class="ball-scale-ripple-multiple t"><div></div><span class="load-text">Please Wait...</span></div></div>
+    <div class="content-wrapper">
     @include('inc.navbar')  
     @yield('breadcrumbs')
     @yield('content')
@@ -38,9 +49,11 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     @include('inc.registerform')
     @include('inc.loginform')
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.form.min.js"></script>
     <script type="text/javascript" src="/js/infobubble.js"></script>
     <script type="text/javascript" src="/js/oop/app.js"></script>
     <script type="text/javascript" src="/js/l.js"></script>

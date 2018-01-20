@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Package;
 use App\Booking;
 use App\Image;
@@ -13,7 +14,9 @@ use App\Schedule;
 use App\PackageVideos;
 use App\Comment;
 use App\AdventureType;
+use App\Admin;
 use App\Content;
+use App\Crew;
 use App\Notification;
 use Response;
 use Auth;
@@ -301,6 +304,13 @@ class ManagersController extends Controller
 
     // crew profiles - crud
 
+    public function manageCrew()
+    {
+        $c = Crew::all();
+
+        return view('wsadmin.managecrew')->with('crew',$c);
+    }
+
 
     public function addCrew(Request $request)
     {
@@ -317,6 +327,7 @@ class ManagersController extends Controller
         $c->name = $request->cname;
         $c->about = $request->cabout;
         $c->avatar = $storedFileName;
+         $c->position = $request->position;
 
         $saved = $c->save();
 
@@ -358,10 +369,9 @@ class ManagersController extends Controller
         $schedules = Package::find($pid)->schedules;
 
         $bookings = DB::table('bookings')->select('*')
-                                         ->join('users','users.id','=','bookings.client')
-                                         ->join('schedules', 'schedules.id' ,'=','bookings.schedule_id')
-                                         ->where(['bookings.package_id' => $pid])
-                                         ->get();
+                                         ->leftJoin('users','users.id','=','bookings.client')
+                                         ->leftJoin('schedules', 'schedules.id' ,'=','bookings.schedule_id')
+                                         ->where('bookings.package_id', $pid)->get();
 
         $data = array(
                     'bookings' => $bookings,
@@ -441,8 +451,103 @@ class ManagersController extends Controller
 
     public function getNotifications()
     {
-
         return Notification::all();
+    }
+
+
+    public function markAsRead($id)
+    {
+        $a = Admin::find($id);
+
+        foreach ($a->unreadNotifications as $notification) {
+            $notification->markAsRead();
+        }
+    }
+
+    public function getUserNotifs($id)
+    {
+        $a = Admin::find($id);
+
+        return $a->notifications;
+    }
+
+    public function dashboard()
+    {
+        $ups = DB::table('bookings')
+                ->select('*')
+                ->leftJoin('schedules','bookings.schedule_id','=','schedules.id')
+                ->leftJoin('users','users.id','=','bookings.client')
+                 ->leftJoin('packages','packages.id','=','bookings.package_id')
+                ->orderBy('schedules.date', 'asc')
+                ->where('schedules.date', '<', Carbon::now()->addDays(30))
+                ->get();
+
+        $data = [
+            'ups' => $ups,
+            'counts' => $this->getBookingsThisWeek(),
+            'most' => $this->getMostBooked(),
+
+        ];
+
+        return view('wsadmin.dashboard')->with('data',$data);
+    }
+
+
+    private function getBookingsThisWeek()
+    {
+        $ups = DB::table('bookings')
+                ->where('created_at', '>', Carbon::now()->subDay(7))
+                ->get();
+
+        return $ups->count();
+    }
+
+    private function getMostBooked()
+    {
+        $p = Package::all();
+        $most = null;
+
+        foreach($p as $a) {
+            $b = DB::table('bookings')
+                    ->select('*')
+                    ->leftJoin('packages','packages.id','=','bookings.package_id')
+                    ->get();
+
+            if($most == null ) {
+                $most = $b;
+            } elseif($most->count() < $b->count()) {
+                $most = $b;
+            }
+        }
+
+        return $most;
+    }
+
+    public function getPackageData()
+    {
+        $data = Package::select(['*', DB::raw('count(bookings.id) as total')])
+            ->leftJoin('bookings', 'packages.id', '=', 'bookings.package_id')
+            ->groupBy('packages.id')
+            ->orderBy('total', 'DESC')
+            ->limit(20)
+            ->get();
+
+        return $data;
+    }
+
+
+    public function bookingsHistory()
+    {
+        $ups = DB::table('bookings')
+                ->select('name','user_fullname','payment','date','bookings.created_at')
+                ->leftJoin('schedules','bookings.schedule_id','=','schedules.id')
+                ->leftJoin('users','users.id','=','bookings.client')
+                ->leftJoin('packages','packages.id','=','bookings.package_id')
+                ->orderBy('schedules.date', 'asc')
+                ->whereDate('schedules.date', '<', Carbon::now())
+                ->get();
+
+        return view('wsadmin.bookingshistory')->with('data',$ups);
     }
 
 

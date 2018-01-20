@@ -7,7 +7,7 @@
   <div class="row filter">
       <div class="col-2">
         <div class="select-icon"><i class="fa fa-bandcamp"></i></div>
-         <select name="adventure-difficulty" class="reg-select" id="adventure-difficulty">
+         <select name="adventure-difficulty" class="reg-select2" id="adventure-difficulty">
           <option value="" disabled selected>Difficulty</option>
           <option value="all">All</option>
           <option value="easy">Easy</option>
@@ -18,7 +18,7 @@
       </div>
       <div class="col-2">
         <div class="select-icon"><i class="fa fa-bicycle"></i></div>
-         <select name="adventure-type" class="reg-select" id="adventure-type">
+         <select name="adventure-type" class="reg-select2" id="adventure-type">
           <option value disabled selected>Adventure Type</option>
           <option value="all">All</option>
           <option value="trekking">Trekking</option>
@@ -46,12 +46,12 @@
       <div class="package-wrapper">
         <div class="card">
           <div class="duration text-center">
-            <span class="num_dur">{{$dur[0]}}</span>
+            <span class="num_dur">{{$dur[0]}}</span><br>
             <span class="dur">{{$dur[1]}}</span>
           </div>
           <a href="/adventure/{{$p->id}}"> <img class="card-img-top" src="/storage/cover_images/{{$p->thumb_img}}"></a>
           <div class="card-body">
-            <a href="/adventure/{{$p->id}}"><h5 class="card-title adv-name">{{$p->name}}</h5></a>
+            <a href="/adventure/{{$p->id}}"><h5 class="card-title adv-name">{{$p->pname}}</h5></a>
             <i class="fa fa-compass" ></i> <span class="location-s">{{$p->location}}</span> <br>
             <hr>
             <i class="fa fa-bandcamp" ></i> <span class="difficulty-s"> {{$p->difficulty}}</span> &nbsp;&nbsp;
@@ -157,6 +157,7 @@ $('[data-toggle="datepicker"]').datepicker({startDate:today});
   });
 
   $('#adventure-type').change(function (e) {
+    Pace.restart();
     e.preventDefault();
     adv_typeurl = 'type='+$(this).val();
     console.log(adv_typeurl)

@@ -11,14 +11,16 @@
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/white/pace-theme-minimal.css">
+   <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
-  <!-- Morris chart -->
   <link rel="stylesheet" href="/css/admin.css">
   <link rel="stylesheet" type="text/css" href="/css/lightgallery.css">
+  <link rel="stylesheet" href="/bower_components/morris.js/morris.css">
   <!-- jvectormap -->
   <link rel="stylesheet" href="/bower_components/jvectormap/jquery-jvectormap.css">
   <!-- Date Picker -->
@@ -32,12 +34,12 @@
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
    <script type="text/javascript">
-     window.laravel = {!! json_encode(['csrf_token' => csrf_token()] ) !!}
+     window.Laravel = {'csrfToken': '{{csrf_token()}}'}
    </script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-  <div class="wrapper">
+<div class="wrapper">
   @include('wsadmin.header')
   @include('wsadmin.navs')
   <div class="content-wrapper">
@@ -74,19 +76,13 @@
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
-<!-- jQuery UI 1.11.4 -->
 <script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button);
 </script>
-<!-- Bootstrap 3.3.7 -->
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<!-- Sparkline -->
-<!-- jvectormap -->
+<script src="/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-locationpicker/0.1.12/locationpicker.jquery.min.js"></script>
-<script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.form.min.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
@@ -94,6 +90,8 @@
 <script src="/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 <!-- jQuery Knob Chart -->
 <script src="/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
+<script src="/bower_components/raphael/raphael.min.js"></script>
+<script src="/bower_components/morris.js/morris.min.js"></script>
 <!-- daterangepicker -->
 <script src="/bower_components/moment/min/moment.min.js"></script>
 <script src="/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -108,8 +106,8 @@
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="/dist/js/pages/dashboard.js"></script>
-
+<script src="/js/dashboardv2.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
 <script src="/js/app.js"></script>
 
 <!-- AdminLTE for demo purposes -->
@@ -127,6 +125,10 @@
         }
   }
 });
+  $(function(){
+    $('.notifications').attr('style','width: 300px; top: 50px; right: 0px;')
+  })
+  
 </script>
 @yield('utils')
 </body>

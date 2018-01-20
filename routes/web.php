@@ -1,11 +1,7 @@
 <?php
 
-Route::view('/', 'homepage',['title' => 'Philippine Adventure Consultants'])->name('index');
-Route::view('/messages', 'chat');
-Route::get('/te',function() {
-  var_dump(Auth::guard('admin')->id());
-});
 
+Route::get('/', 'AdventurerController@homepage')->name('index');
 
 Route::view('/upload', 'crew.upload');
 Route::post('/up/{pid}', 'ManagersController@upload');
@@ -22,7 +18,7 @@ Route::get('/loadpackages','PackagesController@loadpackages');
 Route::get('/adventure/{pid}', 'PackagesController@loadPackage')->name('adventure'); 
 
 // MANAGER
-Route::view('/crew/dashboard', 'wsadmin.dashboard',['title' => 'Dashboard']);
+Route::get('/crew/dashboard', 'ManagersController@dashboard');
 Route::get('/crew/manage', 'ManagersController@manage');
 Route::view('/crew/add', 'wsadmin.addpackage');
 Route::post('/addpackage', 'ManagersController@addpackage');
@@ -43,6 +39,12 @@ Route::post('/addcontent/{pid}','ManagersController@addContent');
 Route::post('/deletecontent/{pid}','ManagersController@deleteContent');
 Route::post('/addadventuretype','ManagersController@addadventureType');
 Route::post('/notifications/get','ManagersController@getNotifications');
+Route::post('/notifications/read/{id}','ManagersController@markAsRead');
+Route::get('/notifications/get/{id}','ManagersController@getUserNotifs');
+Route::get('/upcomings','ManagersController@getUpcomings');
+Route::get('/manage-my-crew','ManagersController@manageCrew');
+Route::get('/getgraphdata','ManagersController@getPackageData');
+Route::get('/history', 'ManagersController@bookingsHistory');
 //BOOKING
 Route::get('/book/review/{pid}', 'BookingsController@review')->name('book');
 Route::post('/book/confirm/{pid}', 'BookingsController@confirm');

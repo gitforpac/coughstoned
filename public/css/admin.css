@@ -1,7 +1,14 @@
 
 
+.ur {
+    background-color: #dee5e8;
+}
+
 .navbar-nav>.notifications-menu>.dropdown-menu, .navbar-nav>.messages-menu>.dropdown-menu, .navbar-nav>.tasks-menu>.dropdown-menu {
-    width: 355px;
+    width: 358px;
+}
+.navbar-nav>.notifications-menu>.dropdown-menu>li .menu>li>a i {
+    color: #8adb8b !important;
 }
 
 .col-md-10 {
@@ -13,13 +20,13 @@ div.col-md-12 {
     padding-bottom: 0px;
     margin-bottom: 0px;
 }
-ul.pagination {
+/*ul.pagination {
     margin-left: 20px;
 }
 ul.pagination li {
     padding: 5px 10px;
     border: 1px solid rgba(2,1,1,0.1);
-}
+}*/
 .loading {
     text-align: center;
     width: 100%;
@@ -292,4 +299,15 @@ div.lg-backdrop {
   margin-bottom: 2rem;
   border: 0;
   position: relative;
+}
+
+#load-overlay-bh {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    height: 100vh;
+    z-index: 500;
+    width: 100%;
+    height: 100%;
 }

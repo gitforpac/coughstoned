@@ -32,12 +32,20 @@ class BookingsController extends Controller
 
         if(!$validateCC == false) { 
 
+            $b = new Booking;
+
+            $b->client = Auth::guard('user')->id();
+            $b->num_guest = $request->guest;
+            $b->payment = $request->total_payment;
+            $b->schedule_id = $request->schedule;
+            $b->package_id = $pid;
+
+            $b->save();
+
             $admins = Admin::all();
             $package = Package::find($pid);
 
             Notification::send($admins,new NotifyNewBooking($package));
-            event(new NewBooking());
-        
 
             return Response::json(['booked' => $validateCC]); 
         } else {

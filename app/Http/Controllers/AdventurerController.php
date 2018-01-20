@@ -8,7 +8,9 @@ use App\Models\User;
 use Hash;
 use App\Comment;
 use Response;
+use DB;
 use Image; 
+use Package;
 
 class AdventurerController extends Controller
 {
@@ -17,6 +19,18 @@ class AdventurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function homepage()
+    {
+        $p = DB::table('packages')
+                ->limit(5)
+                ->whereNull('deleted_at')
+                ->get();
+
+        return view('homepage')->with('data',$p);
+    }
+
+
     public function index()
     {
        return abort(404);

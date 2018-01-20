@@ -1,4 +1,4 @@
-	
+
 class Client {
 
 	getUserInfo(id) 

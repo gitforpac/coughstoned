@@ -17,7 +17,7 @@
     <!-- small box -->
     <div class="small-box bg-aqua">
       <div class="inner">
-        <h3>150</h3>
+        <h3>{{$data['counts']}}</h3>
 
         <p> New Bookings </p>
       </div>
@@ -31,9 +31,9 @@
     <!-- small box -->
     <div class="small-box bg-green">
       <div class="inner">
-        <h3>53<sup style="font-size: 20px">%</sup></h3>
+        <h3>{{$data['most']->count()}}<span style="font-size: 20px;"> Bookings</span></h3>
 
-        <p>Bookings</p>
+        <p>{{$data['most'][0]->name}}</p>
       </div>
       <div class="icon">
         <i class="ion ion-stats-bars"></i>
@@ -43,11 +43,11 @@
   </div>
 </div>
 <header style="margin-bottom: 0px;padding: 0px;margin-top: 20px;"> 
-  <h1 class="h3">Upcoming Package Schedules</h1>
+  <h1 class="h3">Upcoming Schedules <small> (Upcoming or Near Schedules that are in 30 days span)</small></h1>
 </header>
 <div class="box box-info">
   <div class="box-header with-border">
-    <h3 class="box-title">Latest Orders</h3>
+    <h3 class="box-title">Near Schedules</h3>
 
     <div class="box-tools pull-right">
       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -61,21 +61,25 @@
       <table class="table no-margin">
         <thead>
         <tr>
-          <th>Package Name</th>
-          <th>Date Schedule</th>
-          <th>Number of Adventurers</th>
-          <th>Status</th>
+          <th>Booked By</th>
+          <th width="250px;">Package Booked</th>
+          <th class="text-center">Number of Client(s)</th>
+          <th>Schedule Date</th>
+           <th>Status</th>
         </tr>
         </thead>
         <tbody>
+        @foreach($data['ups'] as $u)
         <tr>
-          <td><a href="pages/examples/invoice.html">OR9842</a></td>
-          <td>Call of Duty IV</td>
-          <td><span class="label label-success">Shipped</span></td>
+          <td><a href="pages/examples/invoice.html">{{$u->name}}</a></td>
+          <td>{{$u->user_fullname}}</td>
+          <td class="text-center">{{$u->num_guest}}</td>
           <td>
-            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+            {{ date('M d, Y, D', strtotime($u->date)) }}
           </td>
+          <td>{{$u->status}}</td>
         </tr>
+        @endforeach
         </tbody>
       </table>
     </div>
@@ -88,4 +92,10 @@
   <!-- /.box-footer -->
 </div>
 </section>
+<div class="container-fluid">
+  <header style="margin-bottom: 0px;padding: 0px;margin-top: 20px;"> 
+  <h1 class="h3"><i class="fa fa-bar-chart"></i> Bar Graph Data of the Bookings of Packages </h1>
+</header>
+  <div id="myfirstchart" style="height: 250px;"></div>
+</div>
 @endsection
