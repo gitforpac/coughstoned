@@ -1,4 +1,5 @@
 <?php
+Route::get('/test', 'BookingsController@getPrices');
 
 
 Route::get('/', 'AdventurerController@homepage')->name('index');
@@ -38,13 +39,22 @@ Route::post('/updateitinerary/{pid}','ManagersController@updateItinerary');
 Route::post('/addcontent/{pid}','ManagersController@addContent');
 Route::post('/deletecontent/{pid}','ManagersController@deleteContent');
 Route::post('/addadventuretype','ManagersController@addadventureType');
+
+=======
 Route::post('/notifications/get','ManagersController@getNotifications');
+>>>>>>> 90f3dda47ef6dd09d5c5da10fd8f0242d620d37f
+=======
+Route::post('/notifications/get','ManagersController@getNotifications');
+<<<<<<< HEAD
 Route::post('/notifications/read/{id}','ManagersController@markAsRead');
 Route::get('/notifications/get/{id}','ManagersController@getUserNotifs');
 Route::get('/upcomings','ManagersController@getUpcomings');
 Route::get('/manage-my-crew','ManagersController@manageCrew');
 Route::get('/getgraphdata','ManagersController@getPackageData');
 Route::get('/history', 'ManagersController@bookingsHistory');
+=======
+>>>>>>> 90f3dda47ef6dd09d5c5da10fd8f0242d620d37f
+>>>>>>> 75cb20662b4061bcfe9d7f83da6b60c9716a086a
 //BOOKING
 Route::get('/book/review/{pid}', 'BookingsController@review')->name('book');
 Route::post('/book/confirm/{pid}', 'BookingsController@confirm');
@@ -53,6 +63,10 @@ Route::post('/paymentg/{id}', 'BookingsController@getPrices');
 Route::get('/asd', 'BookingsController@checkCC');
 
 //SUPERADMIN
+Route::post('/deleteuser/{id}','SuperAdminController@deleteAccAdventurer');
+Route::post('/deletecrew/{id}','SuperAdminController@deleteAccCrew');
+Route::post('/addmanager','SuperAdminController@addCrewManager');
+Route::post('/addadventurer','SuperAdminController@addAccountUser');
 
 // ADVENTURER
 Route::resource('adventurer','AdventurerController');

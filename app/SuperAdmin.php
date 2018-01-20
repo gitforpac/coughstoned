@@ -5,10 +5,15 @@ namespace App;
 use App\Notifications\SuperadminResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Superadmin extends Authenticatable
 {
     use Notifiable;
+
+     use SoftDeletes;
+
+     protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
