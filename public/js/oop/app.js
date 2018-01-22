@@ -161,7 +161,7 @@ class Packages {
           .then(function(response) {
             //initialize data
             var packages = response.data;
-            var cebu = {lat: 9.9557, lng: 123.4008};
+            var cebu = {lat: 10.2085, lng: 123.7573};
             var mapoptions = {
               zoom: 10,
               center: cebu
@@ -181,9 +181,9 @@ class Packages {
                 });
 
                 var mcontent = '<div class="map-content">';
-                mcontent += '<a href="/adventure/'+p.id+'"><img src="/storage/cover_images/'+p.thumb_img+'"></a>';
-                mcontent += '<a href="/adventure/'+p.id+'"><h3 class="c-header">'+p.name+'</h3></a>';
-                mcontent += '<h3 class="c-price">₱'+p.price+' per person</h3>';
+                mcontent += '<a href="/adventure/'+p.pid+'"><img src="/storage/cover_images/'+p.thumb_img+'"></a>';
+                mcontent += '<a href="/adventure/'+p.pid+'"><h3 class="c-header">'+p.name+'</h3></a>';
+                mcontent += '<h3 class="c-price">₱'+p.price_per+' per person</h3>';
                 mcontent += '<span class="c-rate">12 Review(s)</span>'
                 mcontent += '</div>';
 

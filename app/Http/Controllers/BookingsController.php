@@ -16,6 +16,7 @@ use App\Admin;
 use App\Notifications\NotifyNewBooking;
 use Notification;
 use App\Events\NewBooking;
+use App\Prices;
 
 class BookingsController extends Controller
 {
@@ -29,26 +30,30 @@ class BookingsController extends Controller
 
         $book = new Booking;
 
-        $validateCC = $this->checkCC($request->cardnumber,$request->exp,$request->cvv,$request->payment);
+        $validateCC = $this->checkCC($request->cardnumber,$request->exp,$request->cvv,$request->total_payment);
 
         if(!$validateCC == false) { 
 
             $b = new Booking;
 
-            $b->client = Auth::guard('user')->id();
-            $b->num_guest = $request->guest;
+            $b->client = 1;
+            $b->package_id = $pid;
+            $b->num_guest = $request->num_guest;
             $b->payment = $request->total_payment;
             $b->schedule_id = $request->schedule;
-            $b->package_id = $pid;
 
-            $b->save();
+            $saved = $b->save();
 
-            $admins = Admin::all();
-            $package = Package::find($pid);
+            if($saved) {
 
-            Notification::send($admins,new NotifyNewBooking($package));
+                $admins = Admin::all();
+                $package = Package::find($pid);
 
-            return Response::json(['booked' => $validateCC]); 
+                Notification::send($admins,new NotifyNewBooking($package));
+                event(new NewBooking());
+
+                return Response::json(['booked' => $saved]); 
+            }
         } else {
             return Response::json(['success' => $validateCC, 'error' => $this->error]);  
         }
@@ -185,67 +190,16 @@ class BookingsController extends Controller
     public function getPrices($pid,Request $request)
     {
 
-        //  private $bookingfee = 0.20;
-        // public $error = '';
-        // private $max_person = 12;
-        // private $discount_per_person = 250;
-        $package = Package::find($pid)->first();
+        Package::find($pid)->prices;
 
-        for($count = 0; $count < $request->num_guest; $count++){
-            $total = $package->price;
-            $per_head = $total;
-            $booking_fee = $total*$this->bookingfee;
-            if($count >= 1){
-                $total = ($package->price*($count+1))-($this->discount_per_person*$count);
-                $per_head = $package->price-($this->discount_per_person*$count);
-                $booking_fee = $total*$this->bookingfee;
-            }
-        }
-        
-        
-        // switch ($request->num_guest) {
-        //     case 1:
-        //         $total = $package->price*($package->adventurer_limit/2)-800;
-        //         break;
-        //     case 2:
-        //         $total = ($package->price*3)*$request->num_guest;
-        //         break;
-        //     case 3:
-        //         $total = ($package->price*2+800)*$request->num_guest;
-        //         break;
-        //     case 4:
-        //         $total = ($package->price*2+400)*$request->num_guest;
-        //         break;
-        //     case 5:
-        //          $total = ($package->price*2)*$request->num_guest;
-        //         break;
-        //     case 6:
-        //         $total = ($package->price+1000)*$request->num_guest;
-        //         break;
-        //     case 7:
-        //          $total = ($package->price+900)*$request->num_guest;
-        //         break;
-        //     case 8:
-        //          $total = ($package->price+800)*$request->num_guest;
-        //         break;
-        //     case 9:
-        //          $total = ($package->price+700)*$request->num_guest;
-        //         break;
-        //     case 10:
-        //          $total = ($package->price+600)*$request->num_guest;
-        //         break;
-        //     case 11:
-        //          $total = ($package->price+500)*$request->num_guest;
-        //         break;
-        //     case 12:
-        //          $total = ($package->price+400)*$request->num_guest;
-        //         break;
-        //     default:
-        //          $total = $package->price;
+        $count = $request->client_count;
 
-        // }
+        $total = Prices::where('person_count',$request->client_count)
+                        ->where('package_id',$pid)
+                        ->get();
 
-         return Response::json(['total' => $booking_fee]);
+
+        return Response::json(['per' => $total->first()->price_per,'total'=>($total->first()->person_count*$total->first()->price_per)]); 
 
     }
 

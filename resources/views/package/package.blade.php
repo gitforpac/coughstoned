@@ -49,12 +49,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @for($i=0; $i < count($pagedata['prices']); $i++)
+                    @foreach($pagedata['prices'] as $p)
                     <tr class="text-center">
-                      <td >{{$i+1}}</td>
-                      <td >₱ {{number_format($pagedata['prices'][$i])}} / person</td>
+                      <td >{{$p->person_count}}</td>
+                      <td >₱ {{number_format($p->price_per)}} / person</td>
                     </tr>
-                    @endfor
+                    @endforeach
                     <tr class="text-center">
                       <td><strong>{{$pagedata['package']->adventurer_limit+1}} and above</strong></td>
                       <td>Contact us</td>
@@ -70,8 +70,7 @@
                      @if(sizeof($pagedata['schedules']) > 0)
                     <tr>
                       <th>Schedule</th>
-                      <th>Price</th>
-                      <th>Space Left</th>
+                      <th>Starting Price</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -81,11 +80,9 @@
                       <td scope="row">
                         {{ date('M d, Y, D', strtotime($s->date)) }}
                       </td>
-                      <td>₱{{$pagedata['package']->price}}</td>
-                      <td><i class="fa fa-user" style="color: #484848;"></i> &nbsp;{{$pagedata['spaceleft'][$loop->iteration-1]}}</td>
+                      <td>₱ {{number_format($pagedata['prices']->last()->price_per)}}</td>
                       <td>
-
-                          <a href="/book/review/{{$pagedata['package']->id}}?scheduleid={{$s->id}}" class="book-btn{{ $pagedata['spaceleft'][$loop->iteration-1] == 0 ? ' disabled' : '' }}">{{ $pagedata['spaceleft'][$loop->iteration-1] == 0 ? ' Full' : 'Book' }}</button>
+                        <a href="/book/review/{{$pagedata['package']->id}}?scheduleid={{$s->id}}" class="book-btn">Book</button>
                       </td>
                     </tr>
                     @endforeach
@@ -134,7 +131,7 @@
             <div class="detail-wrap">
               <h3 class="sb-name">{{$pagedata['package']->name}}</h3>
               <h5 class="loc-header">{{$pagedata['package']->location}} </h5>   
-              <h5 class="p-price"> ₱{{$pagedata['package']->price}}<span class="sb-currency">PHP</span></h5>
+              <h5 class="p-price"> ₱{{number_format($pagedata['prices']->last()->price_per)}}<span class="sb-currency">PHP</span></h5>
               <span class="sb-pp">per person</span>
               <a href="#avd" class="sb-checkdates"><i class="fa fa-calendar-check-o"></i> &nbsp;Check Available Dates</a>
               <span class="sb-c text-center">You may want to view our <a href="#">Cancellation Policy </a></span>

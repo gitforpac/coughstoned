@@ -1,8 +1,27 @@
 <?php
-Route::get('/test', 'BookingsController@getPrices');
+
+//homepage
+Route::get('/', function() {
+
+ $p = DB::table('packages')
+        ->leftJoin('prices', 'packages.id', '=', 'prices.package_id')
+        ->selectRaw('* , packages.id as pid')
+        ->where('prices.is_display','=',1)
+        ->whereNull('packages.deleted_at')
+        ->get();
+
+  return view('homepage')->with('data',$p);
+
+})->name('index');
 
 
-Route::get('/', 'AdventurerController@homepage')->name('index');
+
+Route::get('/addpackagestep2', 'ManagersController@addpackage_steptwo')->name('apstep2');
+Route::post('/addpackage_prices', 'ManagersController@added');
+Route::post('/addprice/{id}', 'ManagersController@addprice');
+Route::post('/removeprice/{id}/{pid}', 'ManagersController@removeprice');
+Route::post('/editprice/{id}/{pid}', 'ManagersController@editprice');
+Route::post('/gpd/{id}/{pid}', 'ManagersController@gpd');
 
 Route::view('/upload', 'crew.upload');
 Route::post('/up/{pid}', 'ManagersController@upload');
@@ -24,10 +43,10 @@ Route::get('/crew/manage', 'ManagersController@manage');
 Route::view('/crew/add', 'wsadmin.addpackage');
 Route::post('/addpackage', 'ManagersController@addpackage');
 Route::post('/additem/{pid}','ManagersController@addIncluded');
-Route::post('/deleteitem/{iid}','ManagersController@deleteIncluded');
+Route::post('/deleteitem/{iid}/{pid}','ManagersController@deleteIncluded');
 Route::get('/editpkg/{pid}', 'ManagersController@update');
 Route::post('/addschedule/{pid}','ManagersController@addSchedule');
-Route::post('/deleteschedule/{sid}','ManagersController@deleteSchedule');
+Route::post('/deleteschedule/{sid}/{pid}','ManagersController@deleteSchedule');
 Route::post('/upload/{pid}','ManagersController@upload');
 Route::post('/deletephoto/{pid}','ManagersController@deletePhoto');
 Route::post('/addvideo/{pid}','ManagersController@addVideo');
@@ -40,21 +59,18 @@ Route::post('/addcontent/{pid}','ManagersController@addContent');
 Route::post('/deletecontent/{pid}','ManagersController@deleteContent');
 Route::post('/addadventuretype','ManagersController@addadventureType');
 
-=======
+
 Route::post('/notifications/get','ManagersController@getNotifications');
->>>>>>> 90f3dda47ef6dd09d5c5da10fd8f0242d620d37f
-=======
+
 Route::post('/notifications/get','ManagersController@getNotifications');
-<<<<<<< HEAD
+
 Route::post('/notifications/read/{id}','ManagersController@markAsRead');
 Route::get('/notifications/get/{id}','ManagersController@getUserNotifs');
 Route::get('/upcomings','ManagersController@getUpcomings');
 Route::get('/manage-my-crew','ManagersController@manageCrew');
 Route::get('/getgraphdata','ManagersController@getPackageData');
 Route::get('/history', 'ManagersController@bookingsHistory');
-=======
->>>>>>> 90f3dda47ef6dd09d5c5da10fd8f0242d620d37f
->>>>>>> 75cb20662b4061bcfe9d7f83da6b60c9716a086a
+
 //BOOKING
 Route::get('/book/review/{pid}', 'BookingsController@review')->name('book');
 Route::post('/book/confirm/{pid}', 'BookingsController@confirm');

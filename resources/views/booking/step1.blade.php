@@ -25,22 +25,34 @@
 		
 					</div>
 					<br>
+
 					<h5 class="pd-h">Payment:</h5>
 					<div class="form-group">
-						<img src="http://i76.imgup.net/accepted_c22e0.png">
+						<label class="control-label pd-h" for="cn">Preferred Payment Method</label>
+							<select class="form-control col-md-4 cvcv">
+								<option value="Credit Card">Credit Card</option>
+								<option value="Deposit">Deposit</option>
+							</select>
 					</div>
-					<div class="form-group">
-						<label class="control-label pd-h" for="cn">Card Information</label>
-						   <input type="text" name="cardnumber" required="" style="width: 90%;" placeholder="Card Number..." class="form-control cvcv" id="cn">
-					</div>
-					<div class="form-group row">
-						<div class="col-md-4" style="margin-right:1px;padding-right: 0">	
-							<input type="text" name="exp" placeholder="Expiry" class="form-control cvcv" id="exp">
+
+					<br>
+
+					<div class="selected-option">
+						<div class="form-group">
+							<label class="control-label pd-h" for="cn">Card Information</label>
+							<img src="http://i76.imgup.net/accepted_c22e0.png" style="float: right;">
+							   <input type="text" name="cardnumber" required="" placeholder="Card Number..." class="form-control cvcv" id="cn">
 						</div>
-						<div class="col-md-4" style="margin-left:0;padding-left:0">
-							<input type="text" name="cvv" placeholder="CVV" class="form-control cvcv" id="cvv">
+						<div class="form-group row">
+							<div class="col-md-4" style="margin-right:1px;padding-right: 0">	
+								<input type="text" name="exp" placeholder="Expiry" class="form-control cvcv" id="exp">
+							</div>
+							<div class="col-md-4" style="margin-left:0;padding-left:0">
+								<input type="text" name="cvv" placeholder="CVV" class="form-control cvcv" id="cvv">
+							</div>
 						</div>
 					</div>
+
 					<div class="form-group">
 					  <label class="control-label pd-h" for="selectbasic">Request</label>
 					    <textarea rows="5" class="form-control cvr" name="request" placeholder="I want chocolates"> </textarea>
@@ -83,7 +95,7 @@
 	</div>
 		<div class="col" style="background-color: #f1f2ef; height: 240px; margin-top: 10px;">
 			<div class="detail-wrap">
-              	<h3 class="sb-name">{{$pagedata['package']->pname}}</h3>
+              	<h3 class="sb-name">{{$pagedata['package']->name}}</h3>
              	<h5 class="loc-header">Talamban </h5> 
               	<br>
               	<h5 class="sd">Date: {{date('M d, Y, D', strtotime($pagedata['schedule']->date))}}</h5>
@@ -135,12 +147,12 @@
 		  url: "/paymentg/"+pid,
 		  type: 'POST',
 		  cache: false,
-		  data: {num_guest: adventurercount},
+		  data: {client_count: adventurercount},
 		  success: function(html){
 		   $('input[name="total_payment"]').val(html.total);
-			total = html.total;
+		   var total = html.total;
 			$('.total .p-price').html('₱'+total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'<span class="sb-currency">PHP</span>');
-			$('.numag').html('x'+adventurercount+' <i class="fa fa-users"></i>');
+			$('.numag').html(html.per+'PHP x '+adventurercount+'person(s) <i class="fa fa-users"></i>');
 			$('input[name="guest"]').val(parseInt(adventurercount));
 		  }
 		});

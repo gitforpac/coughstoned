@@ -311,21 +311,13 @@
 	            <div class="box-header with-border">
 	              <h3 class="box-title">Upload Photos</h3>
 	            </div>
-	            <div class="box-body">
+	            <div class="box-body upl" >
 	              	<form action="/upload/{{$data['package']->id}}" method="post" enctype="multipart/form-data" id="upload-photo">
 				  	{{ csrf_field() }}
-	                <div class="col-md-3">
-	                  <label class="custom-file">
-					   	<input type="file" name="images[]" multiple required>
-					    <span class="custom-file-control"></span>
-				 	</label>
-	                </div>
-	                <div class="col-md-4">
-	                  <button type="submit" class="btn btn-primary bd" >
-                     <i class="fa fa-plus-circle" aria-hidden="true"></i> Upload
-                    </button>
+            <div class="col bg-olive text-white user-u-b">
+              <input type="file" name="images[]" multiple required><i class="fa fa-plus-circle"></i> Upload
+            </div>
 	              </form>
-	              </div>
 	            </div>
 	            <!-- /.box-body -->
 				</div>

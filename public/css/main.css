@@ -1,4 +1,30 @@
 
+
+.wmap {
+	position: relative;
+	margin-top: 40%;
+	color: #484848;
+	font-size: 26px !important;
+}
+
+input { 
+	font-size: 14px !important;
+ }
+
+.c2 {
+    max-width: 1640px !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+	display: block;
+	margin-top: 190px;
+}
+
+.ftft {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+}
 .content-wrapper {
 	display: none;
 }
@@ -347,6 +373,7 @@ button.mybtn1 {
 
 .card-body {
 	padding: 10px;
+	font-size: 14px !important;
 }
 
 ul {
@@ -628,12 +655,14 @@ div.form-icon {
 	 background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat 100px center;
 }
 .reg-select2 {
-	height: 40px;
+	height: 36px;
 	line-height: 1.25;
 	color: #464a4c;
 	background-color: #fff;
 	width: 100%;
-	padding: 10px;
+	padding: 5px;
+	font-size: 14px !important;
+	border: 1px solid #453E3D;
 }
 
 .reg-select:focus {
@@ -778,9 +807,6 @@ div.packages-wrapper {
 	margin: 0px;
 }
 
-
-
-
 div.package-wrapper {
 	float: left;
 	padding: 5px;
@@ -788,6 +814,10 @@ div.package-wrapper {
 	width: 48%;
 }
 
+div.package-wrapper .col-md-8{
+	padding: 0px;
+	margin: 0px;
+}
 .adv-name {
 	padding-bottom: 5px;
 	margin-bottom: 0px;
@@ -795,6 +825,8 @@ div.package-wrapper {
 
 .card-body {
 	color: #484848;
+	padding-top: 15px;
+	padding-bottom: 20px;
 }
 
 .card-body hr {
@@ -805,6 +837,8 @@ div.package-wrapper {
 
 span.difficulty-s {
 	text-transform:capitalize;
+	display: inline-block;
+	margin-top: 8px;
 }
 
 span.location-s {
@@ -820,7 +854,7 @@ img.card-img-top {
 	padding-top: 10px;
 	padding-left: 20px;
 	border-bottom: 1px solid #DBDBDB;
-	width: 100%;
+	background-color: #fff;
 }
 .filter div.select-icon {
 	position: absolute;
@@ -842,11 +876,13 @@ img.card-img-top {
 
 .filter .form-icon {
 	right: 26px;
+	top: -2px;
 }
 
 .filter .form-control {
 	border: 1px solid #453E3D;
 	border-radius: 0;
+	height: 36px;
 }
 
 .filter .col-2 {
@@ -1761,7 +1797,11 @@ a.vp {
 }
 
 div.map {
-	height: 100vh;
+	position: fixed !important;
+	right: 0px !important;
+	top: 180px !important;
+	height: 100%;
+	width: 100%;
 }
 
 
@@ -2015,7 +2055,7 @@ ul.pagination li.active {
 /** footer */
 
 
-footer { background-color:#0c1a1e; min-height:350px; font-family: 'Open Sans', sans-serif; margin-top: 60px; color:#fff; }
+footer { background-color:#0c1a1e; min-height:300px; font-family: 'Open Sans', sans-serif; margin-top: 60px; color:#fff; z-index: 5000}
 .footerleft { margin-top:50px; padding:0 36px; }
 .logofooter { margin-bottom:10px; font-size:25px; color:#fff; font-weight:700;}
 
@@ -2040,6 +2080,12 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Open Sans', s
 	font-size: 25px;
 	color: #fff;
 	margin-left: 10px;
+}
+
+.footer2 {
+	display: block !important;
+	width: 100% !important;
+	background-color: #fff !important; 
 }
 
 
@@ -2074,14 +2120,14 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Open Sans', s
 	position: absolute;
 	top: 15px;
 	left: 15px;
-	height: 54px;
-	width: 54px;
+	height: 50px;
+	width: 50px;
 	background-color: #fff;
 	border-radius: 100%;
 }
 
 .num_dur {
-	font-size: 24px;
+	font-size: 22px;
 	position: relative;
 	top: -2px;
 }
@@ -2152,9 +2198,7 @@ a.btn-view-adv {
 
 .user-u-b {
 	position: relative;
-	top: 230px;
 	padding: 8px 12px;
-	width: 60%;
 	margin: auto;
 }
 

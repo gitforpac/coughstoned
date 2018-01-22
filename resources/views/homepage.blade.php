@@ -71,11 +71,11 @@
                     <span class="num_dur">{{$dur[0]}}</span>
                     <span class="dur">{{$dur[1]}}</span>
                   </div>
-                  <a href="/adventure/{{$p->id}}"> <img class="card-img-top" src="/storage/cover_images/{{$p->thumb_img}}"></a>
+                  <a href="/adventure/{{$p->pid}}"> <img class="card-img-top" src="/storage/cover_images/{{$p->thumb_img}}"></a>
                   <div class="card-body">
                     <a href="/adventure/1"><h5 class="card-title adv-name">{{$p->name}}</h5></a>
                     <i class="fa fa-compass" ></i> <span class="location-s">{{$p->location}}</span> <br>
-                    <i class="fa fa-tag"></i> {{$p->price}}
+                    <i class="fa fa-tag"></i> {{$p->price_per}}
                     <a href="/adventure/1" class="btn-sm btn-view-adv">View This Adventure</a>
                   </div>
                 </div>

@@ -48,14 +48,6 @@
                 </div>
             </div>
 
-          <div class="form-group row">
-            <label class="col-sm-2">Price in Peso</label>
-            <div class="col-md-8">
-              <input name="package_price" type="text" placeholder="How much is this Adventure?" class="form-control" required>
-              <small id="price-error"></small>
-            </div>
-          </div>
-
             <div class="form-group row" style="margin-top: 20px;">
                <label class="col-sm-2">Adventure Type</label>
                <div class="col-md-8">
@@ -79,6 +71,9 @@
                     <option value="{{$i}}">{{$i}}</option>
                     @endfor
                   </select>
+                  <br>
+                  <div class="form-group row pricesdiv">
+                  </div>
                 </div>
             </div>
 
@@ -147,5 +142,17 @@
         },
          enableAutocomplete: true
     });
+
+
+    $('#package_limit').change(function() {
+        var prices = '<label class="col-sm-12">Prices per Person</label><div class="col-md-8">';
+
+        for(var i=1; i<=$(this).val(); i ++) {
+          prices += '<div class="input-group"><span class="input-group-addon">₱</span><input type="text" class="form-control" required name="price_for_' + i + '" placeholder="Price for ' + i + ' (per person)"> </div><br>';
+        }
+        prices += '</div>';
+        $('.pricesdiv').html(prices);
+    })
+
 </script>
 @endsection

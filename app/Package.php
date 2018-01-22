@@ -43,6 +43,11 @@ class Package extends Model
         return $this->hasMany('App\Booking')->orderBy('schedule_id','desc');
     }
 
+    public function prices()
+    {
+        return $this->hasMany('App\Prices')->orderBy('person_count','asc');
+    }
+
 
 }
 

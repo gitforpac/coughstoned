@@ -166,7 +166,10 @@ google.maps.event.addListener(map,'click',function(event){
 }
 
 </script>
- <script>
-    $('textarea').ckeditor();
+
+<script type="text/javascript">
+    
+    
+
 </script>
 @endsection
