@@ -27,17 +27,13 @@
         <link rel="stylesheet" type="text/css" href="/css/loaders.css">
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
-        <script
-          src="https://code.jquery.com/jquery-3.2.1.min.js"
-          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-          crossorigin="anonymous"></script>
         <script type="text/javascript">
             Pace.on('done', function() {
                 $('.loader-overlay').fadeOut();
                 $('.content-wrapper').fadeIn();
             });
         </script>
-</head>
+    </head>
     <body>
     <div class="loader-overlay"><div class="ball-scale-ripple-multiple t"><div></div><span class="load-text">Please Wait...</span></div></div>
     <div class="content-wrapper">
@@ -45,11 +41,14 @@
     @yield('breadcrumbs')
     @yield('content')
     @include('inc.footer')
-    <script src="{{ url('/') }}/AjaxRegister/AjaxRegister.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     @include('inc.registerform')
     @include('inc.loginform')
     </div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>

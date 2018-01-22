@@ -199,58 +199,10 @@
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 <script type="text/javascript">
-
-  var c = new Client();
-  @if(Auth::guard('user')->check())
-  var name = '{{Auth::guard('user')->user()->user_fullname}}';
-  c.writeComment({{$pagedata['package']->id}},{{Auth::guard('user')->id()}},name);
-  @endif
-
-  $(document).on('click', 'a[href="#avd"]', function (event) {
-    event.preventDefault();
-    $('html, body').animate({
-        scrollTop: $($.attr(this, 'href')).offset().top-140
-  }, 500);
-  });
-
-
-$(document).ready(function(){
-  $('.lightgallery').lightGallery({
-    mode: 'lg-fade',
-    thumbnail:false,
-    animateThumb: false,
-    showThumbByDefault: false,
-    autoplayControls: false,
-    share: false,
-    zoom: false,
-    download: false,
-    pager: false,
-    loadVimeoThumbnail: true,
-    vimeoThumbSize: 'thumbnail_medium',
-  });
-});
-
-$('[href="#photos"]').on('shown.bs.tab', function (e) {
-  e.preventDefault();
-  $('.grid').masonry({
-    itemSelector: '.grid-item',
-    columnWidth: 0
-  });
-})
-$('[href="#videos"]').on('shown.bs.tab', function (e) {
-  e.preventDefault();
-  $('.grid').masonry({
-    itemSelector: '.grid-item',
-    columnWidth: 0
-  });
-})
-$(function(){
-  var stateObj = { page: 1 };
-   window.history.pushState(stateObj, "adventure");
-})
-
-window.onpopstate = function() {
-      window.location = "/adventures";
-  }
+@if(Auth::guard('user')->check())
+var name = '{{Auth::guard('user')->user()->user_fullname}}';
+c.writeComment({{$pagedata['package']->id}},{{Auth::guard('user')->id()}},name);
+@endif
 </script>
+<script type="text/javascript" src="/js/package.js"></script>
 @endsection
