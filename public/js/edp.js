@@ -7,7 +7,7 @@ $('[href="#videos"]').on('shown.bs.tab', function (e) {
 	  itemSelector: '.grid-item',
 	  columnWidth: 0
 	});
-})
+});
 $(document).ready(function(){
     $('#lightgallery').lightGallery({
       thumbnail:false,
@@ -57,7 +57,7 @@ if(included) {
 } else {
   $.alert('Please enter an Item');
 }
-})
+});
 // --add inclusion
 
 // remove inclusion
@@ -135,7 +135,7 @@ if(dateavd) {
   $.alert('Please enter Date');
 }
 
-})
+});
 // --add date
 
 // remove date
@@ -231,20 +231,19 @@ $(function() {
 	    beforeSend: function() {
 	    	Pace.restart();
 	        var percentVal = '0%';
-	        bar.width(percentVal)
+	        bar.width(percentVal);
 	        percent.html(percentVal);
 	    },
 	    uploadProgress: function(event, position, total, percentComplete) {
 	        var percentVal = percentComplete + '%';
-	        bar.width(percentVal)
+	        bar.width(percentVal);
 	        percent.html(percentVal);
 	    },
 	    success: function(data) {
 	        var percentVal = '100%';
-	        bar.width(percentVal)
+	        bar.width(percentVal);
 	        percent.html(percentVal);
 	        $('#photosga').find('div#upds').hide().html(data).fadeIn();
-	        console.log(data)
 	    },
 	}); 
 
@@ -473,7 +472,7 @@ $('#add_price_forbtn').click(function(e){
 	$('#add_price_forbtn').prop('disabled',false);
  	$.alert('Please check your input - Must not be empty or must be a number');
 }
-})
+});
 
 
 // remove price
@@ -523,12 +522,12 @@ $.confirm({
 $(document).on('click','#edit_pricebtn',function(){
   var prid = $(this).data('id');
   var url = '/editprice/'+prid+'/'+pid;
-  $('#edit-price-modal').modal('show')
+  $('#edit-price-modal').modal('show');
   $('input[name="personcount"]').val($(this).data('count'));
   $('input[name="new_price"]').val($(this).data('price'));
   $('input[name="price_pos"]').val($(this).data('position'));
   $('#edit-price-form').attr('action',url);
-  $('#save-price-btn').prop('disabled',true)
+  $('#save-price-btn').prop('disabled',true);
 });
 
 

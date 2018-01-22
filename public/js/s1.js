@@ -5,7 +5,7 @@
 
 $(document).on('change','#adultguest',function(){
 adventurercount = parseInt($(this).val());
-$('.total .p-price').html(c)
+$('.total .p-price').html(c);
 
 $.ajaxSetup({
 headers: {
@@ -31,22 +31,22 @@ $('input[name="guest"]').val(parseInt(adventurercount));
 
 
 $('input#cn').focus(function() {
-$(this).attr('placeholder', '0000000000000000')
+$(this).attr('placeholder', '0000000000000000');
 }).blur(function() {
-    $(this).attr('placeholder', 'Card Number...')
-})
+    $(this).attr('placeholder', 'Card Number...');
+});
 
 $('input#exp').focus(function() {
-$(this).attr('placeholder', 'MM / YY')
+$(this).attr('placeholder', 'MM / YY');
 }).blur(function() {
-    $(this).attr('placeholder', 'Expiry')
-})
+    $(this).attr('placeholder', 'Expiry');
+});
 
 $('input#cvv').focus(function() {
-$(this).attr('placeholder', '3 digits')
+$(this).attr('placeholder', '3 digits');
 }).blur(function() {
-    $(this).attr('placeholder', 'CVV')
-})
+    $(this).attr('placeholder', 'CVV');
+});
 
 
 
@@ -81,7 +81,7 @@ dataType: 'json',
 success: function(data) {
 	if(data.success == false) {
 		$('.ccerror').show();
-		$('.err2').html(data.error)
+		$('.err2').html(data.error);
 		$('html,body').animate({scrollTop:0},500);
 	}
 }
