@@ -25,22 +25,34 @@
 		
 					</div>
 					<br>
+
 					<h5 class="pd-h">Payment:</h5>
 					<div class="form-group">
-						<img src="http://i76.imgup.net/accepted_c22e0.png">
+						<label class="control-label pd-h" for="cn">Preferred Payment Method</label>
+							<select class="form-control col-md-4 cvcv" name="select_payment_method" id="select_payment_method" required>
+								<option value="Credit Card" selected>Credit Card</option>
+								<option value="Deposit">Deposit</option>
+							</select>
 					</div>
-					<div class="form-group">
-						<label class="control-label pd-h" for="cn">Card Information</label>
-						   <input type="text" name="cardnumber" required="" style="width: 90%;" placeholder="Card Number..." class="form-control cvcv" id="cn">
-					</div>
-					<div class="form-group row">
-						<div class="col-md-4" style="margin-right:1px;padding-right: 0">	
-							<input type="text" name="exp" placeholder="Expiry" class="form-control cvcv" id="exp">
+
+					<br>
+
+					<div class="selected-option">
+						<div class="form-group">
+							<label class="control-label pd-h" for="cn">Card Information</label>
+							<img src="http://i76.imgup.net/accepted_c22e0.png" style="float: right;">
+							   <input type="text" name="cardnumber" required="" placeholder="Card Number..." class="form-control cvcv" id="cn">
 						</div>
-						<div class="col-md-4" style="margin-left:0;padding-left:0">
-							<input type="text" name="cvv" placeholder="CVV" class="form-control cvcv" id="cvv">
+						<div class="form-group row">
+							<div class="col-md-4" style="margin-right:1px;padding-right: 0">	
+								<input type="text" name="exp" placeholder="Expiry" class="form-control cvcv" id="exp">
+							</div>
+							<div class="col-md-4" style="margin-left:0;padding-left:0">
+								<input type="text" name="cvv" placeholder="CVV" class="form-control cvcv" id="cvv">
+							</div>
 						</div>
 					</div>
+
 					<div class="form-group">
 					  <label class="control-label pd-h" for="selectbasic">Request</label>
 					    <textarea rows="5" class="form-control cvr" name="request" placeholder="I want chocolates"> </textarea>
@@ -114,98 +126,13 @@
 
 @section('utils')
 <script type="text/javascript">
-
 	var price = parseFloat({{$pagedata['package']->price}});
 	var adventurercount = 1;
 	var pid = '{{$pagedata['package']->id}}';
 	var total = $('input[name="total_payment"]').val();
 	var c = '<span class="loadp text-center"><i class="fa fa-cog fa-spin fa-3x fa-fw"></i></span>';
-
-	$(document).on('change','#adultguest',function(){
-		adventurercount = parseInt($(this).val());
-		$('.total .p-price').html(c)
-
-		$.ajaxSetup({
-	      headers: {
-	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	      }
-	    });
-
-		$.ajax({
-		  url: "/paymentg/"+pid,
-		  type: 'POST',
-		  cache: false,
-		  data: {num_guest: adventurercount},
-		  success: function(html){
-		   $('input[name="total_payment"]').val(html.total);
-			total = html.total;
-			$('.total .p-price').html('₱'+total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+'<span class="sb-currency">PHP</span>');
-			$('.numag').html('x'+adventurercount+' <i class="fa fa-users"></i>');
-			$('input[name="guest"]').val(parseInt(adventurercount));
-		  }
-		});
-	});
-
-
 </script>
-<script type="text/javascript" src="{{ asset('js/jquery.form.min.js') }}"></script>
-<script type="text/javascript">
-	$('input#cn').focus(function() {
-    $(this).attr('placeholder', '0000000000000000')
-	}).blur(function() {
-	    $(this).attr('placeholder', 'Card Number...')
-	})
-
-	$('input#exp').focus(function() {
-    $(this).attr('placeholder', 'MM / YY')
-	}).blur(function() {
-	    $(this).attr('placeholder', 'Expiry')
-	})
-
-	$('input#cvv').focus(function() {
-    $(this).attr('placeholder', '3 digits')
-	}).blur(function() {
-	    $(this).attr('placeholder', 'CVV')
-	})
-	</script>
+<script type="text/javascript" src="/js/s1.js"></script>
 
 
-	<script type="text/javascript">
-		$('#cvv').keydown(function (e) {
-			var charCode = (e.which) ? e.which : e.keyCode
-	        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-	            e.preventDefault();
-	        }
-	        if($(this).val().length == 4 && e.keyCode !== 8) {
-	        	e.preventDefault();
-	        }
-    });
-
-		$("#exp").on('keydown', function(e){
-			if($(this).val().length == 2){
-				if(e.keyCode !== 8) {
-					e.preventDefault();
-			    	$(this).val($(this).val() + "/");
-				}
-			}
-
-			if($(this).val().length == 5 && e.keyCode !== 8) {
-					e.preventDefault();		
-			} 
-
-			
-					    
-		});
-
-		$('form#form-adv-book').ajaxForm({
-			dataType: 'json',
-			success: function(data) {
-				if(data.success == false) {
-					$('.ccerror').show();
-					$('.err2').html(data.error)
-					$('html,body').animate({scrollTop:0},500);
-				}
-			}
-		});
-	</script>
 @endsection

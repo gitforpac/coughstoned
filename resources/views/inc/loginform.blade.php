@@ -25,7 +25,7 @@
         <p class="r"><span>or</span></p>
         <div class="main">  
         {{ csrf_field()}} 
-        <div class="error-box">
+        <div class="error-box-login">
         </div>
         <div class="form-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>  
         <input type="email" name="email" id="email" class="form-control" placeholder="Email" autofocus required="" />

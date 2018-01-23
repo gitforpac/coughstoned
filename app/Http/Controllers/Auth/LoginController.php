@@ -89,7 +89,7 @@ class LoginController extends Controller
         } else {
             $u = new User;
 
-            $u->name = $user->name;
+            $u->user_fullname = $user->name;
             $u->email = $user->email;
             $u->password = bcrypt(123456);   
             $fileContents = file_get_contents($user->getAvatar());

@@ -92,6 +92,7 @@
         </form>
           </div>
         </div>
+
         <div class="card">
           <div class="card-header bg-success ">
             Package Inclusions
@@ -112,7 +113,7 @@
                         <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="i-content">
                       @foreach($data['includes'] as $i)
                       <tr class="item-i">
                         <th scope="row"><span class="num">{{$loop->iteration}}</span></th>
@@ -159,7 +160,7 @@
                         <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="avd-content">
                       @foreach($data['schedules'] as $s)
                       <tr>
                        <th scope="row"><span class="num2">{{$loop->iteration}}</span></th>
@@ -231,7 +232,7 @@
                     </div>
                     <div class="form-group row">
                       <label class="col-sm-2">Information</label>
-                      <div class="col-md-10">
+                      <div class="col-md-8">
                       	<textarea name="info_body" class="textarea" placeholder="Place some text here"
                           style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required=""></textarea>
                       </div>
@@ -244,6 +245,61 @@
                 </form>
             </div>
           </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header bg-success ">
+            Package Prices - Pricing Table
+            <div class="toggle-pkgd" style="float: right;" > <span>&nbsp;&nbsp;&nbsp;<a href="#" id="editprices" class="">Edit <i class="fa fa-pencil-square"></i></a></span></div>
+          </div>
+          <div class="card-block">
+              <form class="form-horizontal" style="display: none;" id="prices-form">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                  <h2 class="h5 display">Manage Prices</h2>
+                </div>
+                <div class="card-body">
+                  <table class="table table-striped table-sm prices">
+                    <thead>
+                      <tr>
+                        <th>Person Count</th>
+                        <th>Price per person</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="prices-table">
+                      @foreach($data['prices'] as $i)
+                      <tr class="item-i">
+                        <th scope="row"><span class="num">{{$i->person_count}}</span></th>
+                        <td>₱ {{number_format($i->price_per)}}</td>
+                        <td>₱ {{number_format($i->price_per*$i->person_count)}}</td>
+                        <td>
+                        <a href="javascript:void(0)" data-id="{{$i->id}}" data-count="{{$i->person_count}}" data-price="{{$i->price_per}}" id="edit_pricebtn" class="btn btn-default" title="Edit Price"><i class="fa fa-pencil"></i>
+                        </a>
+
+                        <a href="javascript:void(0)" data-id="{{$i->id}}" id="remove_pricebtn" class="btn btn-default" title="Remove Price" @if (!$loop->last) disabled style="pointer-events: none;" @else data-position="last" @endif><i class="fa fa-trash"></i>
+                        </a>
+                        </td>
+                      </tr>
+                       @endforeach
+                    </tbody>
+                  </table>
+
+                    <div class="form-group row" style="margin-left: 5px;">
+                    <div class="col-md-4" style="margin-left: 0;padding-left: 4px;">
+                      <div class="input-group">
+                      <span class="input-group-addon">₱</span>
+                      <input  type="text" id="price_for" placeholder="Add price as per the next client(s)" class="form-control" >
+                      </div>
+                    </div>                
+                  </div>
+                  <div class="form-group row" style="margin-left: 5px;">
+                  <button class="btn-sm btn-primary" id="add_price_forbtn" title="Add something that is included in this Adventure"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add</button>
+                  </div>
+                </div>
+              </div>
+          </form>
           </div>
         </div> 
 	      </div>
@@ -341,6 +397,43 @@
 </div>
 </section>
 
+<div class="modal fade" id="edit-price-modal">
+  <div class="modal-dialog">
+    <div class="modal-content" style="background: transparent;">
+      <div class="modal-body">
+        <div class="box box-warning">
+            <!-- /.box-header -->
+            <div class="box-body">
+               <form role="form" id="edit-price-form" method="POST">
+                  <!-- text input -->
+                  {{csrf_field()}}
+                  <div class="form-group">
+                    <label>Person Count:</label>
+                    <input type="text" name="personcount" class="form-control" placeholder="Person Count..." value="" disabled required="">
+                  </div>
+                   <div class="form-group row" style="margin-left: 5px;">
+                    <div class="col-md-12" style="margin-left: 0;padding-left: 4px;">
+                      <label>Edit Price:</label>
+                      <div class="input-group">
+                      <span class="input-group-addon">₱</span>
+                      <input type="text" name="new_price" class="form-control" placeholder="Price" value="" required="">
+                      <input type="hidden" name="price_pos" class="form-control" value="">
+                      </div>
+                    </div>                
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Save Changes" id="save-price-btn">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </form>
+            </div>
+          </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
 @endsection
 
 @section('utils')
@@ -367,9 +460,10 @@
   $('#editcontentbtn').click(function(){
     $('#info-form').slideToggle();
   });
+  $('#editprices').click(function(){
+    $('#prices-form').slideToggle();
+  });
 	var pid = '{{$data['package']->id}}';
-  var icount = '{{$data['includes']->count()}}';
-  var scount = '{{$data['schedules']->count()}}';
 
   $(document).ready(function(){
   $('.lightgallery').lightGallery({
@@ -387,6 +481,10 @@
     controls: false,
   });
 });
+
+
+
+
 </script>
 <script type="text/javascript" src="/js/edp.js"></script>
 @endsection

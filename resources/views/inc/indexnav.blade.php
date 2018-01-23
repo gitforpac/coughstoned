@@ -10,22 +10,22 @@
         <a class="nav-link" href="/adventures">ADVENTURES</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">BLOG</a>
+        <a class="nav-link" href="https://viajeracebuana.wordpress.com/">BLOG</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">CREW</a>
+        <a class="nav-link" href="/theteam">CREW</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">ABOUT</a>
+        <a class="nav-link" href="/about-us">ABOUT</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">CONTACT</a>
+        <a class="nav-link" href="/contact-us">CONTACT</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">SIGNUP</a>
+        <a href="javascript:void(0)" class="nav-link" data-toggle="modal" data-target="#register-form">SIGNUP</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">SIGNIN</a>
+        <a href="javascript:void(0)" class="nav-link" data-toggle="modal" data-target="#login-form">SIGNIN</a>
       </li>
     </ul>
   </div>

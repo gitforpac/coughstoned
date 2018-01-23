@@ -1,6 +1,7 @@
-  <header class="main-header" id="app">
+  <header class="main-header"  id="app">
     <!-- Logo -->
     <a href="index2.html" class="logo">
+     
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>P</b>AC</span>
       <!-- logo for regular state and mobile devices -->
@@ -29,7 +30,7 @@
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                         <img src="/img/da.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -42,7 +43,7 @@
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                        <img src="/img/da.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         AdminLTE Design Team
@@ -54,7 +55,7 @@
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                        <img src="/img/da.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Developers
@@ -66,7 +67,7 @@
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                        <img src="/img/da.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Sales Department
@@ -78,7 +79,7 @@
                   <li>
                     <a href="#">
                       <div class="pull-left">
-                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                       <img src="/img/da.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Reviewers
@@ -93,6 +94,7 @@
             </ul>
           </li>
           <!-- Notifications: style can be found in dropdown.less -->
+<<<<<<< HEAD
           
           {{--  MO ERROR OG NAA NI
           <notification v-bind:notifications="notifications" :userid="{{Auth::guard('admin')->user()->id}}"></notification>
@@ -179,46 +181,15 @@
             </ul>
           </li>
           <!-- User Account: style can be found in dropdown.less -->
+=======
+          <notification :notifications="{{Auth::guard('admin')->user()->notifications}}" :unreads="{{Auth::guard('admin')->user()->unreadNotifications}}" :userid="{{Auth::guard('admin')->user()->id}}"></notification>
+          </li>
+>>>>>>> 2cfac0ea82b85f289a65a8c0dc8b73918fe82618
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <img src="/img/da.jpg" class="user-image" alt="User Image">
+              <span class="hidden-xs">{{Auth::guard('admin')->user()->name}}</span>
             </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
-                <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
-                </p>
-              </li>
-              <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
-            </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->
           <li>
@@ -227,4 +198,7 @@
         </ul>
       </div>
     </nav>
+      <notifications />
   </header>
+
+

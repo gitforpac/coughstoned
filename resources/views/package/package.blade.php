@@ -49,12 +49,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @for($i=0; $i < count($pagedata['prices']); $i++)
+                    @foreach($pagedata['prices'] as $p)
                     <tr class="text-center">
-                      <td >{{$i+1}}</td>
-                      <td >₱ {{number_format($pagedata['prices'][$i])}} / person</td>
+                      <td >{{$p->person_count}}</td>
+                      <td >₱ {{number_format($p->price_per)}} / person</td>
                     </tr>
-                    @endfor
+                    @endforeach
                     <tr class="text-center">
                       <td><strong>{{$pagedata['package']->adventurer_limit+1}} and above</strong></td>
                       <td>Contact us</td>
@@ -70,8 +70,7 @@
                      @if(sizeof($pagedata['schedules']) > 0)
                     <tr>
                       <th>Schedule</th>
-                      <th>Price</th>
-                      <th>Space Left</th>
+                      <th>Starting Price</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -81,11 +80,9 @@
                       <td scope="row">
                         {{ date('M d, Y, D', strtotime($s->date)) }}
                       </td>
-                      <td>₱{{$pagedata['package']->price}}</td>
-                      <td><i class="fa fa-user" style="color: #484848;"></i> &nbsp;{{$pagedata['spaceleft'][$loop->iteration-1]}}</td>
+                      <td>₱ {{number_format($pagedata['prices']->last()->price_per)}}</td>
                       <td>
-
-                          <a href="/book/review/{{$pagedata['package']->id}}?scheduleid={{$s->id}}" class="book-btn{{ $pagedata['spaceleft'][$loop->iteration-1] == 0 ? ' disabled' : '' }}">{{ $pagedata['spaceleft'][$loop->iteration-1] == 0 ? ' Full' : 'Book' }}</button>
+                        <a href="/book/review/{{$pagedata['package']->id}}?scheduleid={{$s->id}}" class="book-btn">Book</button>
                       </td>
                     </tr>
                     @endforeach
@@ -112,7 +109,7 @@
                 <div class="commentor">
                   <img src="{{asset('img/da.jpg')}}">
                   <div class="review-s1">
-                    <h3 style="">{{$c->name}}</h3>
+                    <h3 style="">{{$c->user_fullname}}</h3>
                   </div>
                 </div>
                   <div class="comment">
@@ -134,7 +131,7 @@
             <div class="detail-wrap">
               <h3 class="sb-name">{{$pagedata['package']->name}}</h3>
               <h5 class="loc-header">{{$pagedata['package']->location}} </h5>   
-              <h5 class="p-price"> ₱{{$pagedata['package']->price}}<span class="sb-currency">PHP</span></h5>
+              <h5 class="p-price"> ₱{{number_format($pagedata['prices']->last()->price_per)}}<span class="sb-currency">PHP</span></h5>
               <span class="sb-pp">per person</span>
               <a href="#avd" class="sb-checkdates"><i class="fa fa-calendar-check-o"></i> &nbsp;Check Available Dates</a>
               <span class="sb-c text-center">You may want to view our <a href="#">Cancellation Policy </a></span>
@@ -202,58 +199,10 @@
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 <script type="text/javascript">
-
-  var c = new Client();
-  @if(Auth::guard('user')->check())
-  var name = '{{Auth::guard('user')->user()->name}}';
-  c.writeComment({{$pagedata['package']->id}},{{Auth::guard('user')->id()}},name);
-  @endif
-
-  $(document).on('click', 'a[href="#avd"]', function (event) {
-    event.preventDefault();
-    $('html, body').animate({
-        scrollTop: $($.attr(this, 'href')).offset().top-140
-  }, 500);
-  });
-
-
-$(document).ready(function(){
-  $('.lightgallery').lightGallery({
-    mode: 'lg-fade',
-    thumbnail:false,
-    animateThumb: false,
-    showThumbByDefault: false,
-    autoplayControls: false,
-    share: false,
-    zoom: false,
-    download: false,
-    pager: false,
-    loadVimeoThumbnail: true,
-    vimeoThumbSize: 'thumbnail_medium',
-  });
-});
-
-$('[href="#photos"]').on('shown.bs.tab', function (e) {
-  e.preventDefault();
-  $('.grid').masonry({
-    itemSelector: '.grid-item',
-    columnWidth: 0
-  });
-})
-$('[href="#videos"]').on('shown.bs.tab', function (e) {
-  e.preventDefault();
-  $('.grid').masonry({
-    itemSelector: '.grid-item',
-    columnWidth: 0
-  });
-})
-$(function(){
-  var stateObj = { page: 1 };
-   window.history.pushState(stateObj, "adventure");
-})
-
-window.onpopstate = function() {
-      window.location = "/adventures";
-  }
+@if(Auth::guard('user')->check())
+var name = '{{Auth::guard('user')->user()->user_fullname}}';
+c.writeComment({{$pagedata['package']->id}},{{Auth::guard('user')->id()}},name);
+@endif
 </script>
+<script type="text/javascript" src="/js/package.js"></script>
 @endsection

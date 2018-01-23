@@ -7,7 +7,7 @@ $('[href="#videos"]').on('shown.bs.tab', function (e) {
 	  itemSelector: '.grid-item',
 	  columnWidth: 0
 	});
-})
+});
 $(document).ready(function(){
     $('#lightgallery').lightGallery({
       thumbnail:false,
@@ -26,10 +26,10 @@ $(document).ready(function(){
 
 // add inclusion
 $('#add_includedbtn').click(function(e){
-	icount = parseInt(icount) + 1;
+Pace.restart();
  e.preventDefault();
- 	$('#add_includedbtn').prop('disabled',true);
-	var included = $('#included').val();
+$('#add_includedbtn').prop('disabled',true);
+var included = $('#included').val();
 if(included) {
 	$.ajaxSetup({
       headers: {
@@ -43,12 +43,8 @@ if(included) {
       data: {item : included},
       success: function(response) {
       	if(response.success == true) {
-
-      		var html = '<tr class="animated fadeIn"><th scope="row"><span class="num">'+icount+'</span></th>';
-      		html += '<td>'+included+'</td>';
-      		html += '<td><a href="javascript:void(0)" data-id="'+response.item_id+'" id="remove_includedbtn" class="btn btn-default" title="Remove from included"><i class="fa fa-trash"></i></a></td></tr>'
-	      	$('#included').val('');
-	      	$('table.includeds tr:last	').after(html)
+      		$('#included').val('');
+      		$('#i-content').html(response.content);
 	      	$('#add_includedbtn').prop('disabled',false);
 	      	$.notify(" Updated Successfully", "success");
 	      } else {
@@ -61,15 +57,13 @@ if(included) {
 } else {
   $.alert('Please enter an Item');
 }
-})
+});
 // --add inclusion
 
 // remove inclusion
 $('table.includeds').on('click','#remove_includedbtn',function(e) {
 e.preventDefault();
-var $row = $(this).closest('tr'),$table = $row.closest('table');
 var item = $(this).data('id');
-var is = $(this).parent().parent();
 $.confirm({
     title: 'Delete Item',
     content: 'Are you sure you want to delete this Item?',
@@ -80,19 +74,12 @@ $.confirm({
             var _token = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
               type: "POST",
-              url: '/deleteitem/'+item,
+              url: '/deleteitem/'+item+'/'+pid,
               data: {_token : _token },
               success: function(response) {
-			        
               		if(response.success == true) {
+              				$('#i-content').html(response.content);
 		                	$.notify(" Updated Successfully", "success");
-		                	$row.remove();
-					        $table.find('tr').each(function(i,v) {
-					            var sss = $(v).find('span.num').text();
-					            if(sss !== 1) {
-					            	 $(v).find('span.num').text(i);
-					            }
-					        });
 		                } else {
 		                	$.alert({
 		                		title: 'Encountered an error!',
@@ -116,15 +103,11 @@ $.confirm({
 
 // add date
 $('#add_avdbtn').click(function(e){
-scount = parseInt(scount) + 1;
+Pace.restart();
 e.preventDefault();
 var dateavd = $('#date-avd').val();
 var mydate = new Date(dateavd);
-	var month = ["Jan", "Feb", "Mar", "Apr", "May", "June",
-	"July", "Aug", "Sept", "Oct", "Novr", "Dec"][mydate.getMonth()];
-	var cd = month + ' '+ mydate.getDate()+ ', ' + mydate.getFullYear();
-
-	var sqlformat = mydate.getFullYear()+'-'+ (mydate.getMonth()+1) +'-'+mydate.getDate();
+var sqlformat = mydate.getFullYear()+'-'+ (mydate.getMonth()+1) +'-'+mydate.getDate();
 if(dateavd) {
   $.ajaxSetup({
       headers: {
@@ -136,14 +119,11 @@ if(dateavd) {
       type: "POST",
       url: '/addschedule/'+pid,
       data: {schedule : sqlformat},
-      success: function(response) {	  
-      if(response.success == true) {      	
-	     	var html = '<tr class="animated fadeIn"><th scope="row"><span class="num2">'+scount+'</span></th>';
-      		html += '<td>'+cd+'</td>';
-      		html += '<td><a href="javascript:void(0)" data-id="'+response.item_id+'" id="remove_avdbtn" class="btn btn-default" title="Remove Schedule"><i class="fa fa-trash"></i></a></td></tr>'
-	      	$('table.scheds tr:last').after(html);
+      success: function(res) {	  
+      if(res.success == true) {      	
 	      	$('#date-avd').val('');
 	      	$('#add_avdbtn').prop('disabled',false);
+	      	$('#avd-content').html(res.content);
 	      	$.notify(" Updated Successfully", "success");
 	      } else {
 	      	$.notify(" Something Went Wrong", "error");
@@ -155,12 +135,11 @@ if(dateavd) {
   $.alert('Please enter Date');
 }
 
-})
+});
 // --add date
 
 // remove date
-$('table.scheds').on('click','#remove_avdbtn',function(e) {
-var $row = $(this).closest('tr'),$table = $row.closest('table');	
+$('table.scheds').on('click','#remove_avdbtn',function(e) {	
 var sid = $(this).data('id');
 e.preventDefault();
 	$.confirm({
@@ -173,14 +152,11 @@ e.preventDefault();
             var _token = $('meta[name="csrf-token"]').attr('content');
 		    $.ajax({
 		        type: "POST",
-		        url: '/deleteschedule/'+sid,
+		        url: '/deleteschedule/'+sid+'/'+pid,
 		        data: {_token : _token},
 		        success: function(response) {
 		                if(response.success == true) {
-		                	$row.remove();
-					        $table.find('tr').each(function(i,v) {
-					            $(v).find('span.num2').text(i);
-					        });
+		                	$('#avd-content').html(response.content);
 		                	$.notify(" Updated Successfully", "success");
 		                } else {
 		                	$.alert({
@@ -253,21 +229,21 @@ $(function() {
 	$('#upload-photo').ajaxForm({
 		dataType: 'json',
 	    beforeSend: function() {
+	    	Pace.restart();
 	        var percentVal = '0%';
-	        bar.width(percentVal)
+	        bar.width(percentVal);
 	        percent.html(percentVal);
 	    },
 	    uploadProgress: function(event, position, total, percentComplete) {
 	        var percentVal = percentComplete + '%';
-	        bar.width(percentVal)
+	        bar.width(percentVal);
 	        percent.html(percentVal);
 	    },
 	    success: function(data) {
 	        var percentVal = '100%';
-	        bar.width(percentVal)
+	        bar.width(percentVal);
 	        percent.html(percentVal);
-	        $('#photosga').find('div#upds').html(data)
-	        console.log(data)
+	        $('#photosga').find('div#upds').hide().html(data).fadeIn();
 	    },
 	}); 
 
@@ -278,6 +254,7 @@ $(function() {
 $('#add-video-form').ajaxForm({
 		dataType: 'json',
 	    beforeSubmit: function() {
+			Pace.restart();
 	    	var link = $('input[name="video_link"]').val()
 	        var validLink = ValidURL(link);
 	        if(validLink == true){
@@ -292,8 +269,8 @@ $('#add-video-form').ajaxForm({
             	return false;
 	        }
 	    },
-	    success: function(data) {
-	    	$('#videosga').find('div#vupds').html(data)
+	    success: function(data) {	
+	    	$('#videosga').find('div#vupds').hide().html(data).fadeIn();
 	    }
 	});
 
@@ -366,6 +343,9 @@ $('#basic-details').submit(function(e) {
 	e.preventDefault();
 	$("#basic-details").ajaxSubmit({
 		dataType:  'json', 
+		beforeSubmit: function() {
+			Pace.restart();
+		},
 		success: function(data) {
 			if(data.success == true) {
 				$.notify(" Updated Successfully", "success");
@@ -389,6 +369,9 @@ $('#edit-itinerary-form').ajaxForm({
 
 
 $('#info-form').ajaxForm({
+	beforeSubmit: function() {
+		Pace.restart();
+	},
 	success: function(data) {
 			var title = $('input[name="info_title"]').val();
 			var body =  $('textarea[name="info_body"]').val();
@@ -452,8 +435,133 @@ $(document).on('click','#deleteinfobtn',function(e){
 }); 
 })
 
+// add price
+
+$('#add_price_forbtn').click(function(e){
+	Pace.restart();
+ 	e.preventDefault();
+ 	$('#add_price_forbtn').prop('disabled',true);
+	var price = $('#price_for').val();
+
+	var priceisnum = ifnum(price);
+
+	if(price && priceisnum === true) {
+	$.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+
+    $.ajax({
+      type: "POST",
+      url: '/addprice/'+pid,
+      data: {price_for : price},
+      success: function(response) {
+      	if(response.success == true) {
+      		$('#price_for').val('');
+      		$('#prices-table').html(response.content);
+	      	$('#add_price_forbtn').prop('disabled',false);
+	      	$.notify(" Updated Successfully", "success");
+	      } else {
+	      	$.notify(" Something Went Wrong", "error");
+	      }  
+      },
+      dataType: "json",
+    });
+} else {
+	$('#add_price_forbtn').prop('disabled',false);
+ 	$.alert('Please check your input - Must not be empty or must be a number');
+}
+});
+
+
+// remove price
+
+$('table.prices').on('click','#remove_pricebtn',function(e) {
+e.preventDefault();
+var id = $(this).data('id');
+$.confirm({
+    title: 'Delete Item',
+    content: 'Are you sure you want to delete Price along side subtracting max clients?',
+    buttons: {
+        confirm: {
+            btnClass: 'btn-green',
+            action: function () {
+            var _token = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+              type: "POST",
+              url: '/removeprice/'+id+'/'+pid,
+              data: {_token : _token },
+              success: function(response) {	        
+            		if(response.success == true) {
+		                	$.notify(" Updated Successfully", "success");
+		                	$('#prices-table').html(response.content);
+		                } else {
+		                	$.alert({
+		                		title: 'Encountered an error!',
+							    content: 'There was an error deleting',
+							    type: 'red',
+							    typeAnimated: true,
+		                	})
+		                }
+              },
+              dataType: "json",
+            }); 
+        }
+        },
+        cancel:  {
+           btnClass: 'btn-red'
+        },     
+    }
+});
+});
+
+
+// edit price
+
+$(document).on('click','#edit_pricebtn',function(){
+  var prid = $(this).data('id');
+  var url = '/editprice/'+prid+'/'+pid;
+  $('#edit-price-modal').modal('show');
+  $('input[name="personcount"]').val($(this).data('count'));
+  $('input[name="new_price"]').val($(this).data('price'));
+  $('input[name="price_pos"]').val($(this).data('position'));
+  $('#edit-price-form').attr('action',url);
+  $('#save-price-btn').prop('disabled',true);
+});
+
+
+ $('input[name="new_price"]').keyup(function() {
+ 	$('#save-price-btn').prop('disabled',false)
+ })
+
+$('#edit-price-form').ajaxForm({
+	dataType: 'json',
+    beforeSend: function() {
+    	Pace.restart();
+    	var newprice = $('input[name="new_price"]').val();
+        var priceisnum = ifnum(newprice);
+        if(priceisnum == false && newprice !== '' || newprice == null) {
+        	return false;
+        	$.alert('Please check your input - Must not be empty or must be a number');     	
+        }
+    },
+    success: function(data) {
+    	$.notify(" Updated Successfully", "success");
+    	$('#prices-table').html(data);
+    },
+});
 
 
 
 
+
+
+function ifnum(x) {
+	if (isNaN(x)) {
+	   return false;
+	 } else {
+	  	return true;
+	 	}
+}
 

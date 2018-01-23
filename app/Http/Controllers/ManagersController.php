@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Package;
 use App\Booking;
 use App\Image;
@@ -13,9 +15,13 @@ use App\Schedule;
 use App\PackageVideos;
 use App\Comment;
 use App\AdventureType;
+use App\Admin;
 use App\Content;
+use App\Crew;
 use App\Notification;
+use App\Prices;
 use Response;
+
 use Auth;
 use View;
 
@@ -91,7 +97,6 @@ class ManagersController extends Controller
         $package->location = $request->package_location;
         $package->difficulty = $request->package_difficulty;
         $package->description = $request->package_dsc;
-        $package->price = $request->package_price;
         $package->longitude = $request->longitude;
         $package->latitude = $request->latitude;
         $package->duration = $request->package_durnum . ' ' . $request->package_dur;
@@ -100,6 +105,17 @@ class ManagersController extends Controller
         $package->thumb_img = $storedFileName;    
 
         $saved = $package->save();
+
+        $pricesdata = array();
+
+        for($i=1;$i<=$request->package_limit;$i++) {
+            $gett = 'price_for_'.(string)$i;
+            array_push($pricesdata, array('package_id'=>$package->id, 'price_per' => Input::get($gett), 'person_count' => $i));
+        }
+
+        
+        DB::table('prices')->insert($pricesdata);
+
 
         if($saved) {
             return redirect('/editpkg/'.$package->id)->with('createpackagesuccess','Creating Package Successful, You may now Edit information about this package');
@@ -162,10 +178,10 @@ class ManagersController extends Controller
 
         $saved = $s->save();
 
+        $dates = Package::find($pid)->schedules;
+
         if($saved) {
-        return Response::json(array('success' =>  $saved, 'item_id' => $s->id), 200); 
-        } else {
-            return Response::json(array('success' =>  $saved));
+            return Response::json(array('success' => $saved,'content' => view('wsadmin.renderschedule')->with('dates',$dates)->render()));
         }
 
     }
@@ -179,30 +195,38 @@ class ManagersController extends Controller
         
         $saved = $include->save();
 
+        $items = Package::find($pid)->includeds;
+
         if($saved) {
-        return Response::json(array('success' =>  $saved, 'item_id' => $include->id), 200); 
-        } else {
-            return Response::json(array('success' =>  $saved));
+            return Response::json(array('success' => $saved,'content' => view('wsadmin.renderincludes')->with('items',$items)->render()));
         }
     }
 
 
-    public function deleteSchedule($sid)
+    public function deleteSchedule($sid,$pid)
     {
         $s = Schedule::find($sid);
 
         $deleted = $s->delete();
 
-        return Response::json(array('success' =>$deleted)); 
+        $dates = Package::find($pid)->schedules;
+
+        if($deleted) {
+            return Response::json(array('success' => $deleted,'content' => view('wsadmin.renderschedule')->with('dates',$dates)->render()));
+        }
     }
 
-     public function deleteIncluded($iid)
+     public function deleteIncluded($iid,$pid)
     {
         $i = Includeds::find($iid);
 
         $deleted = $i->delete();
 
-        return Response::json(array('success' =>$deleted)); 
+        $items = Package::find($pid)->includeds;
+
+        if($deleted) {
+            return Response::json(array('success' => $deleted,'content' => view('wsadmin.renderincludes')->with('items',$items)->render()));
+        }
 
     }
 
@@ -301,6 +325,13 @@ class ManagersController extends Controller
 
     // crew profiles - crud
 
+    public function manageCrew()
+    {
+        $c = Crew::all();
+
+        return view('wsadmin.managecrew')->with('crew',$c);
+    }
+
 
     public function addCrew(Request $request)
     {
@@ -317,6 +348,7 @@ class ManagersController extends Controller
         $c->name = $request->cname;
         $c->about = $request->cabout;
         $c->avatar = $storedFileName;
+         $c->position = $request->position;
 
         $saved = $c->save();
 
@@ -358,10 +390,9 @@ class ManagersController extends Controller
         $schedules = Package::find($pid)->schedules;
 
         $bookings = DB::table('bookings')->select('*')
-                                         ->join('users','users.id','=','bookings.client')
-                                         ->join('schedules', 'schedules.id' ,'=','bookings.schedule_id')
-                                         ->where(['bookings.package_id' => $pid])
-                                         ->get();
+                                         ->leftJoin('users','users.id','=','bookings.client')
+                                         ->leftJoin('schedules', 'schedules.id' ,'=','bookings.schedule_id')
+                                         ->where('bookings.package_id', $pid)->get();
 
         $data = array(
                     'bookings' => $bookings,
@@ -424,6 +455,7 @@ class ManagersController extends Controller
         $images = Package::find($pid)->images;
         $title = 'Edit - '.$package->name;
         $content  =  Package::find($pid)->contents;
+        $prices = Package::find($pid)->prices;
 
         $data = array(
             'package'  => $package,
@@ -432,17 +464,226 @@ class ManagersController extends Controller
             'title' => $title,
             'videos'=>$videos,
             'images'=>$images,
-            'content'=>$content
+            'content'=>$content,
+            'prices' => $prices
         );
 
         return view('wsadmin.editpackage')->with("data",$data);
     }
 
+    public function removeprice($id,$pid)
+    {
+
+        $deleted = DB::table('prices')->where('id', $id)->delete();
+
+        $pa = Package::find($pid);
+
+        $pp = DB::table('prices')
+            ->select('*')
+            ->where('package_id',$pid)
+            ->get();
+
+        $pa->adventurer_limit = $pp->last()->person_count - 1;
+
+        $pa->save();
+
+
+        $nl = $pp->last()->id;
+
+        $dp = DB::table('prices')
+            ->where('id' ,'=',$nl)
+            ->update(['is_display' => 1]);
+
+
+        $prices = Package::find($pid)->prices;
+
+        if($deleted) {
+            return Response::json(array('success' => $deleted,'content' => view('wsadmin.renderprices')->with('prices',$prices)->render()));
+        } else {
+            Response::json(array('success' => $deleted));
+        }
+
+        
+
+    }
+
+    public function addprice($id,Request $request)
+    {
+        $p = new Prices;
+
+        $pa = Package::find($id);
+
+        $pp = DB::table('prices')
+            ->select('person_count')
+            ->where('package_id',$id)
+            ->get();
+
+        $dp = DB::table('prices')
+            ->leftJoin('packages','prices.package_id','=','packages.id')
+            ->where('is_display' ,'=',1)
+            ->where('packages.id' ,'=',$id)
+            ->update(['is_display' => 0]);
+
+            if($pp->last()) {
+                $pa->adventurer_limit = $pp->last()->person_count + 1;
+            }   else {
+                 $pa->adventurer_limit =  1;
+            }
+
+       
+
+        $pasaved = $pa->save();
+
+        $p->price_per = $request->price_for;
+         if($pp->last()) {
+             $p->person_count = $pp->last()->person_count + 1;
+        }   else {
+             $p->person_count =  1;
+        }
+        $p->is_display = 1;
+        $p->package_id = $id;
+
+        $saved = $p->save();
+
+        $prices = Package::find($id)->prices;
+
+        if($saved == true && $pasaved == true) {
+            return Response::json(array('success' => true,'content' => view('wsadmin.renderprices')->with('prices',$prices)->render()));
+        } else {
+            return Response::json(array('success' => false)); 
+        }
+
+        
+    }
+
+    public function editprice($id,$pid,Request $request)
+    {
+        $p = Prices::find($id);
+
+        $p->price_per = $request->new_price;
+
+        $saved = $p->save();
+
+        $pp = Package::find($pid)->prices;
+
+        return Response::json(view('wsadmin.renderprices')->with('prices',$pp)->render() );
+    }
+
+
 
     public function getNotifications()
     {
-
         return Notification::all();
+    }
+
+
+    public function markAsRead($id)
+    {
+        $a = Admin::find($id);
+
+        foreach ($a->unreadNotifications as $notification) {
+            $notification->markAsRead();
+        }
+    }
+
+    public function getUserNotifs($id)
+    {
+        $a = Admin::find($id);
+
+        return $a->notifications;
+    }
+
+    public function dashboard()
+    {
+        $ups = DB::table('bookings')
+                ->select('*')
+                ->leftJoin('schedules','bookings.schedule_id','=','schedules.id')
+                ->leftJoin('users','users.id','=','bookings.client')
+                ->leftJoin('packages','packages.id','=','bookings.package_id')
+                ->orderBy('schedules.date', 'asc')
+                ->where('schedules.date', '<', Carbon::now()->addDays(30))
+                ->get();
+
+       
+
+        if ($ups->count()) {
+
+             $data = [
+                'ups' => $ups,
+                'counts' => $this->getBookingsThisWeek(),
+                'most' => $this->getMostBooked(),
+                ];
+
+            return view('wsadmin.dashboard')->with('data',$data);
+
+        } else {
+            return view('wsadmin.dashboard');
+        }
+
+        
+    }
+
+
+    private function getBookingsThisWeek()
+    {
+        $ups = DB::table('bookings')
+                ->where('created_at', '>', Carbon::now()->subDay(7))
+                ->get();
+
+        return $ups->count();
+    }
+
+    private function getMostBooked()
+    {
+        $p = Package::all();
+        $most = null;
+
+        foreach($p as $a) {
+            $b = DB::table('bookings')
+                    ->select('*')
+                    ->leftJoin('packages','packages.id','=','bookings.package_id')
+                    ->get();
+
+            if($most == null ) {
+                $most = $b;
+            } elseif($most->count() < $b->count()) {
+                $most = $b;
+            }
+        }
+
+        return $most;
+    }
+
+    public function getPackageData()
+    {
+        $data = Package::select(['*', DB::raw('count(bookings.id) as total')])
+            ->leftJoin('bookings', 'packages.id', '=', 'bookings.package_id')
+            ->groupBy('packages.id')
+            ->orderBy('total', 'DESC')
+            ->limit(20)
+            ->get();
+
+        if($data->count()) {
+            return $data;
+        } else {
+            return Response::json(['data' => 'empty']);
+        }
+        
+    }
+
+
+    public function bookingsHistory()
+    {
+        $ups = DB::table('bookings')
+                ->select('name','user_fullname','payment','date','bookings.created_at')
+                ->leftJoin('schedules','bookings.schedule_id','=','schedules.id')
+                ->leftJoin('users','users.id','=','bookings.client')
+                ->leftJoin('packages','packages.id','=','bookings.package_id')
+                ->orderBy('schedules.date', 'asc')
+                ->whereDate('schedules.date', '<', Carbon::now())
+                ->get();
+
+        return view('wsadmin.bookingshistory')->with('data',$ups);
     }
 
 

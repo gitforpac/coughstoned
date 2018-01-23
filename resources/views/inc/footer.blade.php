@@ -18,6 +18,7 @@
           <li><a href="#"> About us</a></li>
           <li><a href="#"> Contact us</a></li>
           <li><a href="#"> Cancellation Policy</a></li>
+          <li><a href="/admin/login"> Crew Login</a></li>
         </ul>
       </div>
        <div class="col-md-3 col-sm-6 paddingtop-bottom social-footer">

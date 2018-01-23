@@ -14,10 +14,9 @@ class BroadcastServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Broadcast::routes(['middleware' => 'admin']);
+        Broadcast::routes(['middleware' => ['auth:admin' ,'auth:user']]);
 
         require base_path('routes/channels.php');
 
-       
     }
 }

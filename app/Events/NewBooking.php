@@ -33,6 +33,8 @@ class NewBooking implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('notif');
+        return new PrivateChannel('notif');
     }
+
+
 }
