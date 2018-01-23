@@ -25,7 +25,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="/"><i class="fa fa-table"></i> Home Page</a></li>
-            <li><a href="/crew/add"><i class="fa fa-plus-circle"></i> Add Package</a></li>
+            <li><a href="/admin/add"><i class="fa fa-plus-circle"></i> Add Package</a></li>
             <li><a href="#" data-toggle="modal" data-target="#add_adventure_type"><i class="fa fa-plus-circle"></i> Add Adventure Type</a></li>
           </ul>
         </li>
@@ -38,12 +38,12 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="/crew/manage"><i class="fa fa-table"></i> Packages and Bookings</a></li>
-            <li><a href="/crew/add"><i class="fa fa-plus-circle"></i> Add Package</a></li>
+            <li><a href="/admin/manage"><i class="fa fa-table"></i> Packages and Bookings</a></li>
+            <li><a href="/admin/add"><i class="fa fa-plus-circle"></i> Add Package</a></li>
             <li><a href="#" data-toggle="modal" data-target="#add_adventure_type"><i class="fa fa-plus-circle"></i> Add Adventure Type</a></li>
           </ul>
         </li>
-        <li><a href="/crew/dashboard"><i class="fa fa-users" aria-hidden="true"></i> <span>Manage Crew Profiles</span></a></li>
+        <li><a href="/admin/dashboard"><i class="fa fa-users" aria-hidden="true"></i> <span>Manage Crew Profiles</span></a></li>
 
         <li class="treeview">
           <a href="#">

@@ -13,7 +13,6 @@
 <section class="content">
 <div class="row">
 <div class="page home-page">
-  <div class="container">
     <form class="form-horizontal" id="basic-details" method="post" action="/addpackage"  enctype="multipart/form-data">
         {{ csrf_field() }}
           <div class="form-group row">
@@ -53,6 +52,13 @@
             <div class="col-md-8">
               <input name="package_price" type="text" placeholder="How much is this Adventure?" class="form-control" required>
               <small id="price-error"></small>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2">Package Discount (Optional)</label>
+            <div class="col-md-8">
+              <input name="discount" type="text" placeholder="Percent Discount for this package - optional" class="form-control">
             </div>
           </div>
 
@@ -103,8 +109,8 @@
           <div class="form-group row">
             <label class="col-sm-2">Introduction</label>
             <div class="col-md-8">
-              <textarea name="package_dsc" class="textarea" placeholder="Place some text here"
-                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required=""></textarea>
+              <textarea name="package_dsc" class="textarea" placeholder="Write awesome Introduction for the package"
+                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required="" ></textarea>
             </div>
           </div> 
           <div class="form-group row">
@@ -121,7 +127,6 @@
           <div class="form-group row">       
               <input type="submit" name="submit" value="Create" class="btn btn-primary" style="float:right;margin-right: 180px;">
             </div>
-          </div>
         </form>
   </div>
   

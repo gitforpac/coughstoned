@@ -104,7 +104,7 @@
           </div> 
           <div class="form-group row">
             <label class="col-sm-2">Cover Photo</label>
-              <input type="file" name="package_image" style="margin-left: 15px;" />
+              <input type="file" name="package_image" style="padding-left: 12px;" />
           </div>   
           <div class="form-group row">
             <label class="col-sm-2">Map Location</label>
@@ -126,33 +126,46 @@
 @endsection
 
 @section('utils')
-<script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyCAf7Sp7l4TuDL-x1MCdF3cCB6vHuc29dU&sensor=false&libraries=places'></script>>
-
+ <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAf7Sp7l4TuDL-x1MCdF3cCB6vHuc29dU&callback=initMap"
+  type="text/javascript"></script>
 <script>
-    $('#amap').locationpicker({
-        location: {
-            latitude: 10.3403,
-            longitude: 123.9416
-        },
-         radius: 0,
-        inputBinding: {
-            latitudeInput: $('#lat'),
-            longitudeInput: $('#lng'),
-            locationNameInput: $('#us2-address')
-        },
-         enableAutocomplete: true
+function initMap(){
+
+  var options = {
+    zoom : 8,
+    center:{lat: 10.3157, lng: 123.8854}
+  }
+
+  var map = new google.maps.Map(document.getElementById('amap'), options);
+
+marker = null;
+
+google.maps.event.addListener(map,'click',function(event){
+  if(marker) {
+   marker.setMap(null);
+   marker = null;
+   marker = addMarker({coords: event.latLng});
+  }else {
+    marker = addMarker({coords: event.latLng});
+
+  }
+
+  $('input[name="latitude"]').val(event.latLng.lat());
+  $('input[name="longitude"]').val(event.latLng.lng());
+  console.log('lat '+event.latLng.lat()+' lng:' + event.latLng.lng());
+})
+
+
+
+  function addMarker(props){
+    var marker = new google.maps.Marker({
+    position:props.coords,
+    map:map,
     });
-
-
-    $('#package_limit').change(function() {
-        var prices = '<label class="col-sm-12">Prices per Person</label><div class="col-md-8">';
-
-        for(var i=1; i<=$(this).val(); i ++) {
-          prices += '<div class="input-group"><span class="input-group-addon">₱</span><input type="text" class="form-control" required name="price_for_' + i + '" placeholder="Price for ' + i + ' (per person)"> </div><br>';
-        }
-        prices += '</div>';
-        $('.pricesdiv').html(prices);
-    })
+    return marker;
+    
+  } 
+}
 
 </script>
 @endsection

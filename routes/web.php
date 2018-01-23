@@ -40,7 +40,6 @@ Route::get('/adventure/{pid}', 'PackagesController@loadPackage')->name('adventur
 // MANAGER
 Route::get('/crew/dashboard', 'ManagersController@dashboard');
 Route::get('/crew/manage', 'ManagersController@manage');
-Route::view('/crew/add', 'wsadmin.addpackage');
 Route::post('/addpackage', 'ManagersController@addpackage');
 Route::post('/additem/{pid}','ManagersController@addIncluded');
 Route::post('/deleteitem/{iid}/{pid}','ManagersController@deleteIncluded');
@@ -59,6 +58,8 @@ Route::post('/addcontent/{pid}','ManagersController@addContent');
 Route::post('/deletecontent/{pid}','ManagersController@deleteContent');
 Route::post('/addadventuretype','ManagersController@addadventureType');
 
+Route::get('/crew/add', 'ManagersController@addview');
+
 
 Route::post('/notifications/get','ManagersController@getNotifications');
 
@@ -76,43 +77,43 @@ Route::post('/book/{pid}', 'BookingsController@book');
 Route::post('/paymentg/{id}', 'BookingsController@getPrices');
 Route::get('/asd', 'BookingsController@checkCC');
 
-//SUPERADMIN
-// Route::get('/manageadventurer', 'SuperAdminController@ManageAdventurer');
-// Route::get('/managecrew', 'SuperAdminController@ManageCrew');
-// Route::get('/manageadmin', 'SuperAdminController@ManageAdmin');
+// SUPERADMIN
+Route::get('/manageadventurer', 'SuperAdminController@ManageAdventurer');
+Route::get('/managecrew', 'SuperAdminController@ManageCrew');
+Route::get('/manageadmin', 'SuperAdminController@ManageAdmin');
 
 
-// Route::post('/deleteuser/{id}','SuperAdminController@deleteAccAdventurer');
-// Route::post('/deletecrew/{id}','SuperAdminController@deleteAccCrew');
-// Route::post('/deleteadmin/{id}','SuperAdminController@deleteAccAdmin');
-// Route::post('/addmanager','SuperAdminController@addCrewManager');
-// Route::post('/addadventurer','SuperAdminController@addAccountUser');
-// Route::post('/addadmin','SuperAdminController@addAccountAdmin');
-// Route::get('/editadventurer/{id}', 'SuperAdminController@EditAdventurer');
-// Route::get('/editcrew/{id}', 'SuperAdminController@EditCrew');
+Route::post('/deleteuser/{id}','SuperAdminController@deleteAccAdventurer');
+Route::post('/deletecrew/{id}','SuperAdminController@deleteAccCrew');
+Route::post('/deleteadmin/{id}','SuperAdminController@deleteAccAdmin');
+Route::post('/addmanager','SuperAdminController@addCrewManager');
+Route::post('/addadventurer','SuperAdminController@addAccountUser');
+Route::post('/addadmin','SuperAdminController@addAccountAdmin');
+Route::get('/editadventurer/{id}', 'SuperAdminController@EditAdventurer');
+Route::get('/editcrew/{id}', 'SuperAdminController@EditCrew');
 
 
-
-// Route::view('/admin/dashboard', 'superadmin.dashboard',['title' => 'Dashboard']);
-// Route::get('/admin/manage', 'SuperAdminController@manage');
-// Route::view('/admin/add', 'superadmin.addpackage');
-// Route::post('/addpackage', 'SuperAdminController@addpackage');
-// Route::post('/additem/{pid}','SuperAdminController@addIncluded');
-// Route::post('/deleteitem/{iid}','SuperAdminController@deleteIncluded');
-// Route::get('/editpkg/{pid}', 'SuperAdminController@update');
-// Route::post('/addschedule/{pid}','SuperAdminController@addSchedule');
-// Route::post('/deleteschedule/{sid}','SuperAdminController@deleteSchedule');
-// Route::post('/upload/{pid}','SuperAdminController@upload');
-// Route::post('/deletephoto/{pid}','SuperAdminController@deletePhoto');
-// Route::post('/addvideo/{pid}','SuperAdminController@addVideo');
-// Route::post('/deletevideo/{id}','SuperAdminController@deleteVideo');
-// Route::post('/updatedetails/{pid}', 'SuperAdminController@updatepackage');  
-// Route::get('/getbookings/{pid}','SuperAdminController@packageBookings');
-// Route::delete('/deletepackage/{pid}', 'SuperAdminController@deletepackage');
-// Route::post('/updateitinerary/{pid}','SuperAdminController@updateItinerary');
-// Route::post('/addcontent/{pid}','SuperAdminController@addContent');
-// Route::post('/deletecontent/{pid}','SuperAdminController@deleteContent');
-// Route::post('/addadventuretype','SuperAdminController@addadventureType');
+//from crew
+Route::view('/admin/dashboard', 'superadmin.dashboard',['title' => 'Dashboard']);
+Route::get('/admin/manage', 'SuperAdminController@manage');
+ Route::view('/admin/admin/add', 'wsadmin.addpackage');
+Route::post('/admin/addpackage', 'SuperAdminController@addpackage');
+Route::post('/admin/additem/{pid}','SuperAdminController@addIncluded');
+Route::post('/admin/deleteitem/{iid}','SuperAdminController@deleteIncluded');
+Route::get('/admin/editpkg/{pid}', 'SuperAdminController@update');
+Route::post('/admin/addschedule/{pid}','SuperAdminController@addSchedule');
+Route::post('/admin/deleteschedule/{sid}','SuperAdminController@deleteSchedule');
+Route::post('/admin/upload/{pid}','SuperAdminController@upload');
+Route::post('/admin/deletephoto/{pid}','SuperAdminController@deletePhoto');
+Route::post('/admin/addvideo/{pid}','SuperAdminController@addVideo');
+Route::post('/admin/deletevideo/{id}','SuperAdminController@deleteVideo');
+Route::post('/admin/updatedetails/{pid}', 'SuperAdminController@updatepackage');  
+Route::get('/admin/getbookings/{pid}','SuperAdminController@packageBookings');
+Route::delete('/admin/deletepackage/{pid}', 'SuperAdminController@deletepackage');
+Route::post('admin/updateitinerary/{pid}','SuperAdminController@updateItinerary');
+Route::post('/admin/addcontent/{pid}','SuperAdminController@addContent');
+Route::post('/admin/deletecontent/{pid}','SuperAdminController@deleteContent');
+Route::post('/admin/addadventuretype','SuperAdminController@addadventureType');
 
 
 // ADVENTURER

@@ -57,7 +57,7 @@
  -->
                     <div class="form-group row">
                       <label class="col-sm-2">Difficulty</label>
-                      <div class="col-md-8">
+                      <div class="col-md-6">
                          <label class="form-check-label">
                     <input class="form-check-input" type="radio" name="package_difficulty" id="df1" value="easy" checked>
                     Easy
@@ -74,15 +74,25 @@
                     </div>
 
                     <div class="form-group row">
+                      <label class="col-sm-2">Package Discount</label>
+                      <div class="col-md-2">
+                        <div class="input-group">
+                          <input type="text" name="discount" class="form-control" placeholder="e.g 20">
+                          <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
                       <label class="col-sm-2">Introduction</label>
-                      <div class="col-md-10">
-                      	<textarea name="package_dsc" class="textarea" placeholder="Place some text here"
-                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required=""></textarea>
+                      <div class="col-md-10" style="padding-left: 12px;">
+                      	<textarea name="package_dsc" class="textarea" placeholder="Write awesome Introduction for the package"
+                          style="margin-right: 10px; width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required=""></textarea>
                       </div>
                     </div> 
                     <div class="form-group row">
                       <label class="col-sm-2">Cover Photo</label>
-                        <input type="file" id="adv_image" name="package_image" style="margin-left: 12px;" />
+                        <input type="file" id="adv_image" name="package_image"  style="padding-left: 12px;" />
                     </div>   
                     <div class="form-group row">       
                       <div class="col-sm-10 offset-sm-2">

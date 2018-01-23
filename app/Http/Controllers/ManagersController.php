@@ -95,6 +95,7 @@ class ManagersController extends Controller
 
         $package->name =$request->package_name;
         $package->location = $request->package_location;
+        $package->discount = (int)$request->discount/100;
         $package->difficulty = $request->package_difficulty;
         $package->description = $request->package_dsc;
         $package->longitude = $request->longitude;
@@ -695,7 +696,12 @@ class ManagersController extends Controller
         return view('wsadmin.bookingshistory')->with('data',$ups);
     }
 
+    public function addview()
+    {
+        $atype = AdventureType::all();
 
+        return view('wsadmin.addpackage')->with('adv_type',$atype);
+    }
 
 
 
