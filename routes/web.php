@@ -62,11 +62,10 @@ Route::post('/addadventuretype','ManagersController@addadventureType');
 
 Route::post('/notifications/get','ManagersController@getNotifications');
 
-<<<<<<< HEAD
 
 Route::post('/notifications/get','ManagersController@getNotifications');
 
-=======
+
 Route::post('/notifications/get','ManagersController@getNotifications');
 
 Route::post('/notifications/read/{id}','ManagersController@markAsRead');
@@ -76,7 +75,6 @@ Route::get('/manage-my-crew','ManagersController@manageCrew');
 Route::get('/getgraphdata','ManagersController@getPackageData');
 Route::get('/history', 'ManagersController@bookingsHistory');
 
->>>>>>> 2cfac0ea82b85f289a65a8c0dc8b73918fe82618
 //BOOKING
 Route::get('/book/review/{pid}', 'BookingsController@review')->name('book');
 Route::post('/book/confirm/{pid}', 'BookingsController@confirm');

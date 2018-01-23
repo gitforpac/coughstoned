@@ -2,7 +2,7 @@
 @section('content')
 <div class="col-md-12">
 <div class="box-header with-border">
-  <h2 class="box-title ml-3 text-info"><strong>Crew Accounts</strong></h2>
+  <h2 class="box-title ml-3 text-info"><i class="fa fa-group"></i> <strong>Crew Accounts</strong></h2>
 </div>
 <div class="container">
     <div class="col-sm">

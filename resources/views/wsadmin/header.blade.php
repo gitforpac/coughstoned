@@ -94,11 +94,11 @@
             </ul>
           </li>
           <!-- Notifications: style can be found in dropdown.less -->
-<<<<<<< HEAD
+
           
-          {{--  MO ERROR OG NAA NI
+          
           <notification v-bind:notifications="notifications" :userid="{{Auth::guard('admin')->user()->id}}"></notification>
-          </li> --}}
+          </li>
 
           <!-- Tasks: style can be found in dropdown.less -->
 
@@ -181,10 +181,10 @@
             </ul>
           </li>
           <!-- User Account: style can be found in dropdown.less -->
-=======
-          <notification :notifications="{{Auth::guard('admin')->user()->notifications}}" :unreads="{{Auth::guard('admin')->user()->unreadNotifications}}" :userid="{{Auth::guard('admin')->user()->id}}"></notification>
+
+         <notification :notifications="{{Auth::guard('admin')->user()->notifications}}" :unreads="{{Auth::guard('admin')->user()->unreadNotifications}}" :userid="{{Auth::guard('admin')->user()->id}}"></notification>
           </li>
->>>>>>> 2cfac0ea82b85f289a65a8c0dc8b73918fe82618
+
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="/img/da.jpg" class="user-image" alt="User Image">

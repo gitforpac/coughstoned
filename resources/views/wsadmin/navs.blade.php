@@ -30,10 +30,9 @@
         </li>
         <li class="treeview">
           <a href="#">
-<<<<<<< HEAD
+
            <i class="fa fa-gift"></i>
-=======
-           <i class="fa fa-sticky-note-o"></i>
+
             <span>Pages</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -50,7 +49,7 @@
         <li class="treeview">
           <a href="#">
            <i class="fa fa-book"></i>
->>>>>>> 2cfac0ea82b85f289a65a8c0dc8b73918fe82618
+
             <span>Manage Packages</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
