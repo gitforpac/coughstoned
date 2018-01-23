@@ -1,6 +1,9 @@
 
 
 $.get('/getgraphdata',(res) => {
+
+  if(res.data !== 'empty') {
+
     var gdata = [];
     var objdata = {};
     res.forEach(function(e) {
@@ -20,4 +23,9 @@ $.get('/getgraphdata',(res) => {
     labels: ['Bookings']
 
   });
+
+  } else {
+    $('#myfirstchart').html('<h5>No data to be shown for now</h5>')
+  }
+    
 });

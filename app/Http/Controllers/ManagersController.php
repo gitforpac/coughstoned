@@ -615,7 +615,7 @@ class ManagersController extends Controller
                 ];
 
             return view('wsadmin.dashboard')->with('data',$data);
-            
+
         } else {
             return view('wsadmin.dashboard');
         }
@@ -666,7 +666,7 @@ class ManagersController extends Controller
         if($data->count()) {
             return $data;
         } else {
-            return false;
+            return Response::json(['data' => 'empty']);
         }
         
     }

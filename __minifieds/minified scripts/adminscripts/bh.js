@@ -25,7 +25,7 @@ $.get('/getgraphdata',(res) => {
   });
 
   } else {
-    $.alert('Graph data of bookings will be shown if there is atleast one record')
+    $('#myfirstchart').html('<h5>No data to be shown for now</h5>')
   }
     
 });
