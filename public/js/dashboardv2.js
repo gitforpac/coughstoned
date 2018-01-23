@@ -1,0 +1,8 @@
+
+
+$('textarea').wysihtml5();
+
+
+
+
+
