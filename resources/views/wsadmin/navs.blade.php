@@ -12,6 +12,7 @@
       </div>
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
+        <li><a href="/crew/dashboard"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
          <li><a href="/"><i class="fa fa-tachometer"></i> <span>Back to Website</span></a></li>
         <li class="treeview">
           <a href="#">

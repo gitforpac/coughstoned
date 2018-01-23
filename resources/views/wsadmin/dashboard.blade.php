@@ -17,9 +17,12 @@
     <!-- small box -->
     <div class="small-box bg-aqua">
       <div class="inner">
+        @if(empty($data['counts']))
+          <h3><span style="font-size: 20px;">No Bookings for now</span></h3>
+        @else
         <h3>{{$data['counts']}}</h3>
-
         <p> New Bookings </p>
+        @endif
       </div>
       <div class="icon">
         <i class="ion ion-bag"></i>
@@ -31,9 +34,12 @@
     <!-- small box -->
     <div class="small-box bg-green">
       <div class="inner">
+        @if(empty($data['most']))
+          <h3><span style="font-size: 20px;">No Bookings for now</span></h3>
+        @else
         <h3>{{$data['most']->count()}}<span style="font-size: 20px;"> Bookings</span></h3>
-
         <p>{{$data['most'][0]->name}}</p>
+        @endif
       </div>
       <div class="icon">
         <i class="ion ion-stats-bars"></i>
@@ -60,6 +66,9 @@
     <div class="table-responsive">
       <table class="table no-margin">
         <thead>
+        @if(empty($data['ups']))
+        <h5>No Upcoming bookings.</h5>
+        @else
         <tr>
           <th>Booked By</th>
           <th width="250px;">Package Booked</th>
@@ -80,6 +89,7 @@
           <td>{{$u->status}}</td>
         </tr>
         @endforeach
+        @endif
         </tbody>
       </table>
     </div>
@@ -94,7 +104,7 @@
 </section>
 <div class="container-fluid">
   <header style="margin-bottom: 0px;padding: 0px;margin-top: 20px;"> 
-  <h1 class="h3"><i class="fa fa-bar-chart"></i> Bar Graph Data of the Bookings of Packages </h1>
+  <h1 class="h3"><i class="fa fa-bar-chart"></i> Bar Graph Data of the Bookings of Packages<small> (Will be shown once there is a record)</small>  </h1> 
 </header>
   <div id="myfirstchart" style="height: 250px;"></div>
 </div>

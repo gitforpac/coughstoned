@@ -29,8 +29,8 @@
 					<h5 class="pd-h">Payment:</h5>
 					<div class="form-group">
 						<label class="control-label pd-h" for="cn">Preferred Payment Method</label>
-							<select class="form-control col-md-4 cvcv">
-								<option value="Credit Card">Credit Card</option>
+							<select class="form-control col-md-4 cvcv" name="select_payment_method" id="select_payment_method" required>
+								<option value="Credit Card" selected>Credit Card</option>
 								<option value="Deposit">Deposit</option>
 							</select>
 					</div>

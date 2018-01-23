@@ -1,6 +1,9 @@
 
 
 $.get('/getgraphdata',(res) => {
+
+  if(res!== false) {
+
     var gdata = [];
     var objdata = {};
     res.forEach(function(e) {
@@ -20,4 +23,9 @@ $.get('/getgraphdata',(res) => {
     labels: ['Bookings']
 
   });
+
+  } else {
+    $.alert('Graph data of bookings will be shown if there is atleast one record')
+  }
+    
 });

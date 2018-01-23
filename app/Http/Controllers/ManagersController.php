@@ -97,7 +97,6 @@ class ManagersController extends Controller
         $package->location = $request->package_location;
         $package->difficulty = $request->package_difficulty;
         $package->description = $request->package_dsc;
-        $package->price = $request->package_dsc;
         $package->longitude = $request->longitude;
         $package->latitude = $request->latitude;
         $package->duration = $request->package_durnum . ' ' . $request->package_dur;
@@ -600,19 +599,28 @@ class ManagersController extends Controller
                 ->select('*')
                 ->leftJoin('schedules','bookings.schedule_id','=','schedules.id')
                 ->leftJoin('users','users.id','=','bookings.client')
-                 ->leftJoin('packages','packages.id','=','bookings.package_id')
+                ->leftJoin('packages','packages.id','=','bookings.package_id')
                 ->orderBy('schedules.date', 'asc')
                 ->where('schedules.date', '<', Carbon::now()->addDays(30))
                 ->get();
 
-        $data = [
-            'ups' => $ups,
-            'counts' => $this->getBookingsThisWeek(),
-            'most' => $this->getMostBooked(),
+       
 
-        ];
+        if ($ups->count()) {
 
-        return view('wsadmin.dashboard')->with('data',$data);
+             $data = [
+                'ups' => $ups,
+                'counts' => $this->getBookingsThisWeek(),
+                'most' => $this->getMostBooked(),
+                ];
+
+            return view('wsadmin.dashboard')->with('data',$data);
+            
+        } else {
+            return view('wsadmin.dashboard');
+        }
+
+        
     }
 
 
@@ -655,7 +663,12 @@ class ManagersController extends Controller
             ->limit(20)
             ->get();
 
-        return $data;
+        if($data->count()) {
+            return $data;
+        } else {
+            return false;
+        }
+        
     }
 
 

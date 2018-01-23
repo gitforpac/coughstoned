@@ -32,15 +32,18 @@ class BookingsController extends Controller
 
         $validateCC = $this->checkCC($request->cardnumber,$request->exp,$request->cvv,$request->total_payment);
 
-        if(!$validateCC == false) { 
+
+
+        if($request->select_payment_method === 'Deposit') {
 
             $b = new Booking;
 
-            $b->client = 1;
+            $b->client = Auth::guard('user')->user()->id;
             $b->package_id = $pid;
-            $b->num_guest = $request->num_guest;
+            $b->num_guest = (int)$request->num_guest;
             $b->payment = $request->total_payment;
             $b->schedule_id = $request->schedule;
+            $b->payment_method = 'Deposit';
 
             $saved = $b->save();
 
@@ -52,11 +55,48 @@ class BookingsController extends Controller
                 Notification::send($admins,new NotifyNewBooking($package));
                 event(new NewBooking());
 
-                return Response::json(['booked' => $saved]); 
+                return Response::json(['success' => $saved]); 
+
+                 return redirect('home/dashboard');
+            } else {
+                return Response::json(['success' => false, 'error' => 'There was a problem processing booking process']);  
             }
+    
+
+        } elseif ($request->select_payment_method === 'Credit Card') {
+
+            if(!$validateCC == false) { 
+
+            $b = new Booking;
+
+            $b->client = Auth::guard('user')->user()->id;
+            $b->package_id = $pid;
+            $b->num_guest = $request->num_guest;
+            $b->payment = $request->total_payment;
+            $b->schedule_id = $request->schedule;
+            $b->payment_method = 'Credit Card';
+
+            $saved = $b->save();
+
+            if($saved) {
+
+                $admins = Admin::all();
+                $package = Package::find($pid);
+
+                Notification::send($admins,new NotifyNewBooking($package));
+                event(new NewBooking());
+
+                return Response::json(['success' => $saved]); 
+            }
+            } else {
+                return Response::json(['success' => $validateCC, 'error' => $this->error]);  
+            }
+
         } else {
-            return Response::json(['success' => $validateCC, 'error' => $this->error]);  
+            return Response::json(['success' => 'error']);
         }
+
+        
 
 
     }
