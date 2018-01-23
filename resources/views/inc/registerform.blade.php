@@ -15,22 +15,22 @@
     <div class="main">  
     <div id="errorm"></div>
     <div class="form-icon"><i class="fa fa-envelope-o" aria-hidden="true"></i></div>   
-    <input type="email" name="email" class="form-control" placeholder="Email" autofocus/>
+    <input required type="email" name="email" class="form-control" placeholder="Email" autofocus/>
     <span class="form-text text-red email-error error-box">
     </span>
     <div class="form-icon"><i class="fa fa-user-o" aria-hidden="true"></i></div>
-    <input type="text" name="firstname" class="form-control" placeholder="First Name" />
+    <input required type="text" name="firstname" class="form-control" placeholder="First Name" />
     <div class="form-icon"><i class="fa fa-user-o" aria-hidden="true"></i></div>
-    <input type="text" name="lastname" class="form-control" placeholder="Last Name" />
+    <input required type="text" name="lastname" class="form-control" placeholder="Last Name" />
     <div class="form-icon"><i class="fa fa-lock" aria-hidden="true"></i></div>
-    <input type="password" name="password" class="form-control" placeholder="Password"/>
+    <input required type="password" name="password" class="form-control" placeholder="Password"/>
     <span class="form-text text-red password-error error-box">
     </span>
     <span class="register-bday">Birthday <small>(*Must be atleast 18 years of age to book)</small></span>
     <br>
     <div class="row">
       <div class="col">
-         <select name="birthdate_month" class="reg-select" id="select-month">
+         <select required name="birthdate_month" class="reg-select" id="select-month">
           <option value="" disabled selected>Month</option>
           <option>January</option>
           <option>February</option>
@@ -47,7 +47,7 @@
         </select>
       </div>
       <div class="col">
-         <select name="birthdate_day" class="reg-select" id="select-day">
+         <select required name="birthdate_day" class="reg-select" id="select-day">
           <option value disabled selected>Day</option>
           @php
             for($i=1;$i<=31;$i++){
@@ -57,7 +57,7 @@
         </select>
       </div>
       <div class="col">
-         <select name="birthdate_year" class="reg-select" id="select-year">
+         <select required name="birthdate_year" class="reg-select" id="select-year">
           <option value="" disabled selected>Year</option>
            @php
             for($i=2017;$i>=1895;$i--){
