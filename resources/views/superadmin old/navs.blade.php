@@ -14,33 +14,19 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-         <li><a href="/"><i class="fa fa-tachometer"></i> <span>Back to Website</span></a></li>
+        <li><a href="/crew/dashboard"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
         <li class="treeview">
           <a href="#">
            <i class="fa fa-book"></i>
-            <span>Visit Pages</span>
+            <span>Manage Users</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="/"><i class="fa fa-table"></i> Home Page</a></li>
-            <li><a href="/crew/add"><i class="fa fa-plus-circle"></i> Add Package</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#add_adventure_type"><i class="fa fa-plus-circle"></i> Add Adventure Type</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-           <i class="fa fa-gift"></i>
-            <span>Manage Packages</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="/crew/manage"><i class="fa fa-table"></i> Packages and Bookings</a></li>
-            <li><a href="/crew/add"><i class="fa fa-plus-circle"></i> Add Package</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#add_adventure_type"><i class="fa fa-plus-circle"></i> Add Adventure Type</a></li>
+            <li><a href="/crew/manage"><i class="fa fa-table"></i> Adventurers</a></li>
+            <li><a href="/crew/add"><i class="fa fa-plus-circle"></i> Crew/Admin</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#addcrew"><i class="fa fa-plus-circle"></i> Add Crew/Manager Account</a></li>
           </ul>
         </li>
         <li><a href="/crew/dashboard"><i class="fa fa-users" aria-hidden="true"></i> <span>Manage Crew Profiles</span></a></li>

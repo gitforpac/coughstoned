@@ -93,8 +93,11 @@
             </ul>
           </li>
           <!-- Notifications: style can be found in dropdown.less -->
+          
+          {{--  MO ERROR OG NAA NI
           <notification v-bind:notifications="notifications" :userid="{{Auth::guard('admin')->user()->id}}"></notification>
-          </li>
+          </li> --}}
+
           <!-- Tasks: style can be found in dropdown.less -->
 
           <li class="dropdown tasks-menu">

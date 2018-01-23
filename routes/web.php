@@ -44,12 +44,12 @@ Route::post('/addcontent/{pid}','ManagersController@addContent');
 Route::post('/deletecontent/{pid}','ManagersController@deleteContent');
 Route::post('/addadventuretype','ManagersController@addadventureType');
 
-=======
+
 Route::post('/notifications/get','ManagersController@getNotifications');
->>>>>>> 90f3dda47ef6dd09d5c5da10fd8f0242d620d37f
-=======
+
+
 Route::post('/notifications/get','ManagersController@getNotifications');
->>>>>>> 90f3dda47ef6dd09d5c5da10fd8f0242d620d37f
+
 //BOOKING
 Route::get('/book/review/{pid}', 'BookingsController@review')->name('book');
 Route::post('/book/confirm/{pid}', 'BookingsController@confirm');
@@ -58,10 +58,43 @@ Route::post('/paymentg/{id}', 'BookingsController@getPrices');
 Route::get('/asd', 'BookingsController@checkCC');
 
 //SUPERADMIN
+Route::get('/manageadventurer', 'SuperAdminController@ManageAdventurer');
+Route::get('/managecrew', 'SuperAdminController@ManageCrew');
+Route::get('/manageadmin', 'SuperAdminController@ManageAdmin');
+
+
 Route::post('/deleteuser/{id}','SuperAdminController@deleteAccAdventurer');
 Route::post('/deletecrew/{id}','SuperAdminController@deleteAccCrew');
+Route::post('/deleteadmin/{id}','SuperAdminController@deleteAccAdmin');
 Route::post('/addmanager','SuperAdminController@addCrewManager');
 Route::post('/addadventurer','SuperAdminController@addAccountUser');
+Route::post('/addadmin','SuperAdminController@addAccountAdmin');
+Route::get('/editadventurer/{id}', 'SuperAdminController@EditAdventurer');
+Route::get('/editcrew/{id}', 'SuperAdminController@EditCrew');
+
+
+
+Route::view('/admin/dashboard', 'superadmin.dashboard',['title' => 'Dashboard']);
+Route::get('/admin/manage', 'SuperAdminController@manage');
+Route::view('/admin/add', 'superadmin.addpackage');
+Route::post('/addpackage', 'SuperAdminController@addpackage');
+Route::post('/additem/{pid}','SuperAdminController@addIncluded');
+Route::post('/deleteitem/{iid}','SuperAdminController@deleteIncluded');
+Route::get('/editpkg/{pid}', 'SuperAdminController@update');
+Route::post('/addschedule/{pid}','SuperAdminController@addSchedule');
+Route::post('/deleteschedule/{sid}','SuperAdminController@deleteSchedule');
+Route::post('/upload/{pid}','SuperAdminController@upload');
+Route::post('/deletephoto/{pid}','SuperAdminController@deletePhoto');
+Route::post('/addvideo/{pid}','SuperAdminController@addVideo');
+Route::post('/deletevideo/{id}','SuperAdminController@deleteVideo');
+Route::post('/updatedetails/{pid}', 'SuperAdminController@updatepackage');  
+Route::get('/getbookings/{pid}','SuperAdminController@packageBookings');
+Route::delete('/deletepackage/{pid}', 'SuperAdminController@deletepackage');
+Route::post('/updateitinerary/{pid}','SuperAdminController@updateItinerary');
+Route::post('/addcontent/{pid}','SuperAdminController@addContent');
+Route::post('/deletecontent/{pid}','SuperAdminController@deleteContent');
+Route::post('/addadventuretype','SuperAdminController@addadventureType');
+
 
 // ADVENTURER
 Route::resource('adventurer','AdventurerController');

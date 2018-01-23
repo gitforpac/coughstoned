@@ -2,35 +2,29 @@
 @section('content')
 <div class="col-md-12">
 <div class="box-header with-border">
-  <h3 class="box-title">Bordered Table</h3>
+  <h2 class="box-title ml-3 text-success"><strong>Adventurer Accounts</strong></h2>
 </div>
-<div class="box-body">
-  <table class="table table-bordered">
+<div class="container">
+    <div class="col-sm">
+      <button type="button" class="btn-success shadow-black btn">
+        <i class="fa fa-plus pr-5"></i> Create Accout</button>
+    </div>
+  </div>
+<div class="box-body container">
+  <table class="table table-bordered table-striped d-sm-table">
     <tr>
       <th>#</th>
-      <th>Package Name</th>
-      <th>Starting Price</th>
-      <th>Location</th>
+      <th>Username</th>
+      <th>Action</th>
     </tr>
-    @foreach($data['packages'] as $bk)
     <tr>
-       <th scope="row">{{$loop->iteration}}</th>
-        <td>{{$bk->name}}</td>
-        <td>{{$bk->price}}</td>
-        <td>{{$bk->location}}</td>
+       <th scope="row">1</th>
+        <td>jerwin12345</td>
         <td>
-        	<a href="javascript:void(0)" class="btn-sm btn-info" id="viewbookingsbtn" data-id="{{$bk->id}}">
-        		@php
-        		$i = $loop->iteration-1;
-        		@endphp
-        		View Bookings&nbsp;&nbsp;@if($data['bookingscount'][$i] !==0)<div class="badge badge-warning">{{$data['bookingscount'][$i]}}</div>
-        		@endif
-        	</a>
-        	<a href="/editpkg/{{$bk->id}}" class="btn-sm btn-primary">Edit Package</a>
-          <a href="javascript:void(0)" class="btn-sm btn-danger" id="deletepkgbtn" data-id="{{$bk->id}}">Delete Package</a>
+          <a href="javascript:void(0)" class="btn-sm btn-primary"><i class="fa fa-edit"></i>Edit</a>
+          <a href="javascript:void(0)" class="btn-sm btn-danger"><i class="fa fa-remove"></i>Remove</a>
         </td>
     </tr>
-    @endforeach
   </table>
 </div>
 </div>

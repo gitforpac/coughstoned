@@ -1,4 +1,4 @@
-@extends('superadmin.adminlayout')
+@extends('wsadmin.crewlayout')
 @section('content')
 <section class="content-header">
     <h1>
